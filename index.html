@@ -18,12 +18,20 @@
 <meta content='Organizing education, leadership, disaster-preparedness, and human-rights training for Rohingya youth in the Cox’s Bazar refugee camps, Bangladesh.' property='og:description'/>
 <meta content='Rohingya Student Union' property='og:site_name'/>
 <meta content='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiNCCb0rkMha2JNyumruB5W6d2gWWWqQv1TQ2Rix9E1NZT-nv-FayBsiNIA_z48X7VLemrfJ5mHK8JX2H7qJs9Tmk2w7KLgGSKFyZ0SrM48sMBMOgUkIkk8DmJHdZrhVdFDJ21coL1B2jM1sCBdJnG2Ytb6XbZkqdCLU8th6IsY_-iUfNYH3-adcwiMPg4/s1200/397913539_643716437944433_2503314930701785591_n.jpg' property='og:image'/>
+<meta content='Rohingya Student Union (RSU) logo' property='og:image:alt'/>
 
 <!-- Twitter Card -->
 <meta content='summary_large_image' name='twitter:card'/>
 <meta content='Rohingya Student Union — RSU Official Portal' name='twitter:title'/>
 <meta content='Organizing education, leadership, disaster-preparedness, and human-rights training for Rohingya youth in the Cox’s Bazar refugee camps, Bangladesh.' name='twitter:description'/>
 <meta content='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiNCCb0rkMha2JNyumruB5W6d2gWWWqQv1TQ2Rix9E1NZT-nv-FayBsiNIA_z48X7VLemrfJ5mHK8JX2H7qJs9Tmk2w7KLgGSKFyZ0SrM48sMBMOgUkIkk8DmJHdZrhVdFDJ21coL1B2jM1sCBdJnG2Ytb6XbZkqdCLU8th6IsY_-iUfNYH3-adcwiMPg4/s1200/397913539_643716437944433_2503314930701785591_n.jpg' name='twitter:image'/>
+<meta content='Rohingya Student Union (RSU) logo' name='twitter:image:alt'/>
+
+<!-- Performance hints: early connections to the font and image hosts; hero slide 1 is the first visible image -->
+<link href='https://fonts.googleapis.com' rel='preconnect'/>
+<link crossorigin='' href='https://fonts.gstatic.com' rel='preconnect'/>
+<link href='https://blogger.googleusercontent.com' rel='preconnect'/>
+<link as='image' fetchpriority='high' href='https://blogger.googleusercontent.com/img/a/AVvXsEgRBqIKk0RTlPzCNoMjxHVSQbV0m4Nj3XLlebsyYObKtaR5ywWxKRiJiNuuhT_-5mXJ_tX0lWk7sMe4kzsURIptqh0UzxKNJVMYuX5oIXGZv8_7wo0ujV5Vwoc6dfNCCVoWrRgvEL7ZRI4gI0OrKl8mzi8dN0pbcvVBzJuV893pe3T2MBnBw1EZMcFWVd4' rel='preload'/>
 
 <link href='https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&amp;family=Space+Mono:wght@400;700&amp;display=swap' rel='stylesheet'/>
 
@@ -1964,7 +1972,7 @@ nav.nav-scrolled .nav-logo-img { width: 32px; height: 32px; }
   transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
 }
 .donate-use-card:hover { box-shadow: 0 2px 6px rgba(15,61,28,0.08), 0 18px 44px rgba(15,61,28,0.12); transform: translateY(-3px); border-color: var(--green-200); }
-.donate-use-card h4 { font-family: var(--font-display); font-size: 21px; color: var(--green-900); margin-bottom: 10px; }
+.donate-use-card h3 { font-family: var(--font-display); font-size: 21px; color: var(--green-900); margin-bottom: 10px; }
 /* more ways to give (placeholder for future options) */
 .donate-more {
   margin-top: 40px;
@@ -2434,12 +2442,22 @@ a.prog-card { text-decoration: none; color: inherit; }
 .nav-links li.has-sub:focus-within .nav-sub { opacity: 1; visibility: visible; }
 .nav-links li.has-sub.menu-closed .nav-sub { opacity: 0; visibility: hidden; }
 .mobile-drawer-links li.mdl-sub button { padding: 9px 14px 9px 68px; font-size: 14px; font-weight: 500; color: var(--text-muted); }
+
+/* ── ACCESSIBILITY ADDITIONS (audit pass) ── */
+/* Valid markup for the nav pill (<li> wrapper) without changing layout: the wrapper generates no box,
+   so the pill is still positioned against .nav-links exactly as before */
+.nav-links li.nav-pill-item { display: contents; }
+/* Programmatic focus on a view's heading (after navigation) should not draw a ring on non-interactive text */
+.page [tabindex='-1']:focus { outline: none; }
+/* Keyboard focus on a gallery photo shows the same overlay/icon as mouse hover */
+.gallery-item:focus-visible::after { opacity: 1; }
+.gallery-item:focus-visible .gallery-item-icon { opacity: 1; transform: scale(1); }
 </style>
 </head>
 <body>
 
 <!-- MOBILE DRAWER -->
-<div class='mobile-drawer' id='mobileDrawer'>
+<div aria-label='Site menu' aria-modal='true' class='mobile-drawer' id='mobileDrawer' inert role='dialog'>
   <div class='mobile-drawer-panel'>
     <div class='mobile-drawer-header'>
       <div class='nav-logo'>
@@ -2449,12 +2467,12 @@ a.prog-card { text-decoration: none; color: inherit; }
           <span>Rohingya Student Union</span>
         </div>
       </div>
-      <button class='mobile-close' onclick='toggleMobileMenu()'>
+      <button aria-label='Close menu' class='mobile-close' onclick='toggleMobileMenu()'>
         <svg fill='none' height='20' stroke='currentColor' stroke-linecap='round' stroke-width='2' viewBox='0 0 24 24' width='20'><line x1='18' x2='6' y1='6' y2='18'/><line x1='6' x2='18' y1='6' y2='18'/></svg>
       </button>
     </div>
     <ul class='mobile-drawer-links'>
-      <li><button class='active' id='mnav-home' onclick='showPage(&quot;home&quot;)'>
+      <li><button aria-current='page' class='active' id='mnav-home' onclick='showPage(&quot;home&quot;)'>
         <span class='mdl-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.7' viewBox='0 0 24 24'><path d='M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75'/></svg></span>
         <span class='mdl-text'>Home</span>
       </button></li>
@@ -2485,15 +2503,15 @@ a.prog-card { text-decoration: none; color: inherit; }
 </div>
 
 <!-- LIGHTBOX -->
-<div class='lightbox' id='lightbox' onclick='if(event.target===this)closeLightbox()'>
-  <img class='lightbox-img' id='lightboxImg' src=''/>
-  <button class='lightbox-close' onclick='closeLightbox()'>
+<div aria-label='Photo viewer' aria-modal='true' class='lightbox' id='lightbox' inert onclick='if(event.target===this)closeLightbox()' role='dialog'>
+  <img alt='Gallery photo' class='lightbox-img' id='lightboxImg' src=''/>
+  <button aria-label='Close photo viewer' class='lightbox-close' onclick='closeLightbox()'>
     <svg fill='none' height='20' stroke='currentColor' stroke-linecap='round' stroke-width='2' viewBox='0 0 24 24' width='20'><line x1='18' x2='6' y1='6' y2='18'/><line x1='6' x2='18' y1='6' y2='18'/></svg>
   </button>
-  <button class='lightbox-prev' onclick='lightboxNav(-1)'>
+  <button aria-label='Previous photo' class='lightbox-prev' onclick='lightboxNav(-1)'>
     <svg fill='none' height='20' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24' width='20'><path d='M15 19l-7-7 7-7'/></svg>
   </button>
-  <button class='lightbox-next' onclick='lightboxNav(1)'>
+  <button aria-label='Next photo' class='lightbox-next' onclick='lightboxNav(1)'>
     <svg fill='none' height='20' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24' width='20'><path d='M9 5l7 7-7 7'/></svg>
   </button>
 </div>
@@ -2508,7 +2526,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 <div class='scroll-progress' id='scrollProgress'></div>
 
 <!-- NAVIGATION -->
-<nav id='globalNav'>
+<nav aria-label='Primary' id='globalNav'>
   <div class='nav-inner'>
     <div class='nav-logo' onclick='showPage(&quot;home&quot;)'>
       <img alt='RSU Logo' class='nav-logo-img' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiNCCb0rkMha2JNyumruB5W6d2gWWWqQv1TQ2Rix9E1NZT-nv-FayBsiNIA_z48X7VLemrfJ5mHK8JX2H7qJs9Tmk2w7KLgGSKFyZ0SrM48sMBMOgUkIkk8DmJHdZrhVdFDJ21coL1B2jM1sCBdJnG2Ytb6XbZkqdCLU8th6IsY_-iUfNYH3-adcwiMPg4/s2048/397913539_643716437944433_2503314930701785591_n.jpg'/>
@@ -2518,13 +2536,13 @@ a.prog-card { text-decoration: none; color: inherit; }
       </div>
     </div>
     <ul class='nav-links'>
-      <span class='nav-pill' id='navPill'></span>
-      <li><button class='active' id='nav-home' onclick='showPage(&quot;home&quot;)'>Home</button></li>
+      <li aria-hidden='true' class='nav-pill-item'><span class='nav-pill' id='navPill'></span></li>
+      <li><button aria-current='page' class='active' id='nav-home' onclick='showPage(&quot;home&quot;)'>Home</button></li>
       <li class='has-sub'>
             <button aria-haspopup='true' id='nav-about' onclick='showPage(&quot;about&quot;)'>About</button>
             <div class='nav-sub'><div class='nav-sub-panel'>
-              <button onclick='showPage(&quot;about&quot;)'>Who We Are</button>
-              <button onclick='showPage(&quot;team&quot;)'>Our Team</button>
+              <button id='nav-sub-about' onclick='showPage(&quot;about&quot;)'>Who We Are</button>
+              <button id='nav-sub-team' onclick='showPage(&quot;team&quot;)'>Our Team</button>
             </div></div>
           </li>
       <li><button id='nav-advocacy' onclick='showPage(&quot;advocacy&quot;)'>Advocacy</button></li>
@@ -2534,7 +2552,7 @@ a.prog-card { text-decoration: none; color: inherit; }
     <div class='nav-actions'>
       <button class='btn btn-primary' onclick='showPage(&quot;donate&quot;)'>Donate Now</button>
     </div>
-    <button class='mobile-trigger' id='mobileTrigger' onclick='toggleMobileMenu()'>
+    <button aria-controls='mobileDrawer' aria-expanded='false' aria-label='Menu' class='mobile-trigger' id='mobileTrigger' onclick='toggleMobileMenu()'>
       <svg fill='none' height='22' stroke='currentColor' stroke-linecap='round' stroke-width='2' viewBox='0 0 24 24' width='22'><line class='ham-line ham-line-1' x1='3' x2='21' y1='6' y2='6'/><line class='ham-line ham-line-2' x1='3' x2='21' y1='12' y2='12'/><line class='ham-line ham-line-3' x1='3' x2='21' y1='18' y2='18'/></svg>
     </button>
   </div>
@@ -2721,7 +2739,7 @@ a.prog-card { text-decoration: none; color: inherit; }
   <section class='about-body section'>
     <div class='container'>
       <div class='section-header--center section-header' style='margin-bottom:40px;'>
-        <h2 class='display-lg'>Who We Are</h2>
+        <h1 class='display-lg'>Who We Are</h1>
       </div>
       <div class='about-cards-wrap'>
         <div class='info-card info-card--intro'>
@@ -2767,7 +2785,7 @@ a.prog-card { text-decoration: none; color: inherit; }
   <section class='section' style='padding-bottom:0;'>
     <div class='container'>
       <div class='section-header--center section-header' style='margin-bottom:48px;'>
-        <h2 class='display-lg'>Our Advocacy</h2>
+        <h1 class='display-lg'>Our Advocacy</h1>
       </div>
 
       <!-- Program Cards Grid -->
@@ -2776,7 +2794,7 @@ a.prog-card { text-decoration: none; color: inherit; }
         <!-- Card 01 -->
         <div class='prog-card prog-card--clickable' onclick='openProgModal(0)'>
           <div class='prog-card-img'>
-            <img alt='Train-the-Teacher Workshop' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikN4QQUukk60Ojc_ozNhwPnDIWroVi_W4FEFRhhqgwEUzNo1-VrbbS1wvcUA86lFelmoQho_HquCCxiWkFGssDLXg-XQAaQngB8EdqGwYSPYMN49yyoDB7myRtg23eERtN5NeV1fgQDDuP4RrQZA09NxrcesV0lEqgwy6cavJjW9XejBNSTcE-wEuCVOs/s2048/643414370_1221653586817379_6580813680708586534_n.jpg'/>
+            <img alt='Train-the-Teacher Workshop' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikN4QQUukk60Ojc_ozNhwPnDIWroVi_W4FEFRhhqgwEUzNo1-VrbbS1wvcUA86lFelmoQho_HquCCxiWkFGssDLXg-XQAaQngB8EdqGwYSPYMN49yyoDB7myRtg23eERtN5NeV1fgQDDuP4RrQZA09NxrcesV0lEqgwy6cavJjW9XejBNSTcE-wEuCVOs/s2048/643414370_1221653586817379_6580813680708586534_n.jpg' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Education &#183; Train-the-Teacher</div>
@@ -2789,7 +2807,7 @@ a.prog-card { text-decoration: none; color: inherit; }
         <!-- Card 02 -->
         <div class='prog-card prog-card--clickable' onclick='openProgModal(1)'>
           <div class='prog-card-img'>
-            <img alt='Human Rights Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0Yiyk60GG9YsKkeJgqOB7W45cZF4Yf1OJJH-1z5AJtrWU_8r0pEbEYe7uCY926r7yjZrZkLrNEny2mouxeOsHRXqgLR1wbcgJX31hwBnB_IXJ7YJrhx6kJyf6Fs6mTm3fg3ixMoXBBIkXwTADhI-nJbjlWX8CrhDdMWiN1zXlSHQuWxy-gobY2giy2yU/s2048/484043856_950005650648842_1146111830082606848_n.jpg'/>
+            <img alt='Human Rights Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0Yiyk60GG9YsKkeJgqOB7W45cZF4Yf1OJJH-1z5AJtrWU_8r0pEbEYe7uCY926r7yjZrZkLrNEny2mouxeOsHRXqgLR1wbcgJX31hwBnB_IXJ7YJrhx6kJyf6Fs6mTm3fg3ixMoXBBIkXwTADhI-nJbjlWX8CrhDdMWiN1zXlSHQuWxy-gobY2giy2yU/s2048/484043856_950005650648842_1146111830082606848_n.jpg' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Skills for Advocacy &#183; Session 8</div>
@@ -2802,7 +2820,7 @@ a.prog-card { text-decoration: none; color: inherit; }
         <!-- Card 03 -->
         <div class='prog-card prog-card--clickable' onclick='openProgModal(2)'>
           <div class='prog-card-img'>
-            <img alt='Photojournalism Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYvFQLRFbTgM6cyVP8SawfOHWAFoEgnGLeGL9lO1OiO373a8gPrv11rSzGS51QSdmNKTEFnhEnxwGEAnF7m8ahik10cRNTdx0nhGGqzYV4SVFtdnadHmhUZ9h-hpKD16kWOybFskx_4SxltWxLiaZb3aeRz1yKFfn5kcU6Zy00QfzwDsKuFIn9VpQMX-4/s2048/480612699_950627720586635_4699305135200217118_n.jpg'/>
+            <img alt='Photojournalism Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYvFQLRFbTgM6cyVP8SawfOHWAFoEgnGLeGL9lO1OiO373a8gPrv11rSzGS51QSdmNKTEFnhEnxwGEAnF7m8ahik10cRNTdx0nhGGqzYV4SVFtdnadHmhUZ9h-hpKD16kWOybFskx_4SxltWxLiaZb3aeRz1yKFfn5kcU6Zy00QfzwDsKuFIn9VpQMX-4/s2048/480612699_950627720586635_4699305135200217118_n.jpg' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Skills for Advocacy &#183; Session 6/12</div>
@@ -2815,7 +2833,7 @@ a.prog-card { text-decoration: none; color: inherit; }
         <!-- Card 04 -->
         <div class='prog-card prog-card--clickable' onclick='openProgModal(3)'>
           <div class='prog-card-img'>
-            <img alt='Research Methodology Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4MUU7xDmz24-FEzg97ZOgMHEynTaRkQyXy4BCTWSUe6H452iFkn5YCXQdyxhMl1C2vkSg71bMRWZNePDSh30yWtWhMJ-ZXjkC1Qu6MhxnTOSjR5ZY2aHZK_DrQnS46iQCu6YDyhSVkRM9vFGUw-sUUbfn_hp518Jy5oMUvU65e2aNy-bbPIL7xL8Q5cM/s320/482033142_950616090587798_5192982234632189680_n.jpg'/>
+            <img alt='Research Methodology Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4MUU7xDmz24-FEzg97ZOgMHEynTaRkQyXy4BCTWSUe6H452iFkn5YCXQdyxhMl1C2vkSg71bMRWZNePDSh30yWtWhMJ-ZXjkC1Qu6MhxnTOSjR5ZY2aHZK_DrQnS46iQCu6YDyhSVkRM9vFGUw-sUUbfn_hp518Jy5oMUvU65e2aNy-bbPIL7xL8Q5cM/s320/482033142_950616090587798_5192982234632189680_n.jpg' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Skills for Advocacy &#183; Session 4/12</div>
@@ -2827,7 +2845,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 
         <div class='prog-card prog-card--clickable' onclick='openProgModal(4)'>
           <div class='prog-card-img'>
-            <img alt='Disaster Risk Management Training Batch 3' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhspRcyH37jCM3zPDKsfUlZOMSRYPaQace2K4hJEZ6g6Zg5663JMRcEePAmd4wUh3caa_iKO-USRWQ57aSb4K6aik2Fbani__tSwTi8a2BYkZxwcN7JmevJA6-IhPcvhK6n-M1yF2mkjAZzGNAkQt92ELsueNd-rRKtFmB2cqes2KNYNiz11YZnbRSWdt0/s2048/482201294_948604717455602_1558052512247191560_n.jpg'/>
+            <img alt='Disaster Risk Management Training Batch 3' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhspRcyH37jCM3zPDKsfUlZOMSRYPaQace2K4hJEZ6g6Zg5663JMRcEePAmd4wUh3caa_iKO-USRWQ57aSb4K6aik2Fbani__tSwTi8a2BYkZxwcN7JmevJA6-IhPcvhK6n-M1yF2mkjAZzGNAkQt92ELsueNd-rRKtFmB2cqes2KNYNiz11YZnbRSWdt0/s2048/482201294_948604717455602_1558052512247191560_n.jpg' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Disaster Preparedness &#183; Batch 3</div>
@@ -2839,7 +2857,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 
         <div class='prog-card prog-card--clickable' onclick='openProgModal(5)'>
           <div class='prog-card-img'>
-            <img alt='Disaster Risk Management Training Batch 4' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYSN11g4sYC_RUP4ynNtVkzugHmXiIu3ywN5pDinhIlHKeus0EbGjM1UFOFWAxeYEDRReSegYkHvpW3HY8nHWia2FzgPN4NAz4b623gjmbK9pd1aOmRKLtfMHowtRUrAqI8-4x3vAEiTIZOPlDUp2OxG-AEf28p5OYEIB7Xnmx5BtDR5nVTi1cvkXmlUc/s2048/483101284_948614664121274_9198498412357262276_n.jpg'/>
+            <img alt='Disaster Risk Management Training Batch 4' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYSN11g4sYC_RUP4ynNtVkzugHmXiIu3ywN5pDinhIlHKeus0EbGjM1UFOFWAxeYEDRReSegYkHvpW3HY8nHWia2FzgPN4NAz4b623gjmbK9pd1aOmRKLtfMHowtRUrAqI8-4x3vAEiTIZOPlDUp2OxG-AEf28p5OYEIB7Xnmx5BtDR5nVTi1cvkXmlUc/s2048/483101284_948614664121274_9198498412357262276_n.jpg' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Disaster Preparedness &#183; Batch 4</div>
@@ -2851,7 +2869,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 
         <div class='prog-card prog-card--clickable' onclick='openProgModal(6)'>
           <div class='prog-card-img'>
-            <img alt='DRM Training for Rohingya Women and Girls' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgG2jaJUN4R1B2pcBshrqZPWnL0H9xZ5UrAwkA8x2fzppuiolXKc8u7bS79w7T6RDcEMdKGIFycQV59y2jIkiMYLwcKrNJF6G4S87R0uNsKtzu9aVa6Bp4k3bLxk9y8MhAedpuEsJ-XP-M1Ws4j8IVrIJjP2_jUagVoIgdk1Z9VG0DiNOIeWS59wSMPbT4/s2048/482216826_948012507514823_5207696665213387018_n.jpg'/>
+            <img alt='DRM Training for Rohingya Women and Girls' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgG2jaJUN4R1B2pcBshrqZPWnL0H9xZ5UrAwkA8x2fzppuiolXKc8u7bS79w7T6RDcEMdKGIFycQV59y2jIkiMYLwcKrNJF6G4S87R0uNsKtzu9aVa6Bp4k3bLxk9y8MhAedpuEsJ-XP-M1Ws4j8IVrIJjP2_jUagVoIgdk1Z9VG0DiNOIeWS59wSMPbT4/s2048/482216826_948012507514823_5207696665213387018_n.jpg' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Disaster Preparedness &#183; Women &amp; Girls</div>
@@ -2863,7 +2881,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 
         <div class='prog-card prog-card--clickable' onclick='openProgModal(7)'>
           <div class='prog-card-img'>
-            <img alt='Disaster Risk Management Training Batch 5' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg9JCScm3iqL_qvarbhAwviUchShdcuKChGD_MMXAW_VIoJqe9AS1wZ1luYZOwexbVWYVjWNVM_C0Hzo-d2ctLTXKBTy6qYA8CFcsxvx74VwCichWpQpBUp4ZQUq7jUl3xLDx1hukrA4AracBktQlKaj_mPsbXz2-_ZBPKKr3hnIfLOmS8ctYMe-5WmDZE/s2048/482345904_949143654068375_1750521253115406580_n.jpg'/>
+            <img alt='Disaster Risk Management Training Batch 5' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg9JCScm3iqL_qvarbhAwviUchShdcuKChGD_MMXAW_VIoJqe9AS1wZ1luYZOwexbVWYVjWNVM_C0Hzo-d2ctLTXKBTy6qYA8CFcsxvx74VwCichWpQpBUp4ZQUq7jUl3xLDx1hukrA4AracBktQlKaj_mPsbXz2-_ZBPKKr3hnIfLOmS8ctYMe-5WmDZE/s2048/482345904_949143654068375_1750521253115406580_n.jpg' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Disaster Preparedness &#183; Batch 5</div>
@@ -2886,7 +2904,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 
         <a class='prog-card prog-card--clickable' href='https://www.facebook.com/share/p/1D8hCw6ZPy/' rel='noopener noreferrer' target='_blank'>
           <div class='prog-card-img'>
-            <img alt='Education That Transforms Lives' src='https://blogger.googleusercontent.com/img/a/AVvXsEg3cM-SKzTfTsrEmrSlrwHe_tOEGB1mcFGjTUezVUgnGaS7YPZuMXovl2V9UJ_93oSdNIIOmy5sIfGVATbTscrdeK9Xh86IudS3f22YsqQY_s9kBWvQxRYP-QaTnyijWkSYIQDx2YvBMrrP0cC-udeiuUZLQLBGsd93x451vAHCbVYYmO-tv7-75nDH-5I'/>
+            <img alt='Education That Transforms Lives' src='https://blogger.googleusercontent.com/img/a/AVvXsEg3cM-SKzTfTsrEmrSlrwHe_tOEGB1mcFGjTUezVUgnGaS7YPZuMXovl2V9UJ_93oSdNIIOmy5sIfGVATbTscrdeK9Xh86IudS3f22YsqQY_s9kBWvQxRYP-QaTnyijWkSYIQDx2YvBMrrP0cC-udeiuUZLQLBGsd93x451vAHCbVYYmO-tv7-75nDH-5I' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Learning Centers Update</div>
@@ -2898,7 +2916,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 
         <a class='prog-card prog-card--clickable' href='https://www.facebook.com/share/p/1AJejEPq7i/' rel='noopener noreferrer' target='_blank'>
           <div class='prog-card-img'>
-            <img alt='Small Classrooms, Big Dreams' src='https://blogger.googleusercontent.com/img/a/AVvXsEhekXgauksLsFufbIyGr_O4oYRJSObTmjAG03sOOJ1xZrRzT0WQB4eGjDLF5CqNRkQPJ8tR24TGxEJ1TSAPkCvkU3AkVpLxN3AqIyvc3EAfvBuuqJtx-n0U3gf1NJtXQ7PeVdVvUYtk8eWb6M9iAcuX3ZJ6NMrborwZYijrSQ-W5B6nfuWHw6asOYQwX5s'/>
+            <img alt='Small Classrooms, Big Dreams' src='https://blogger.googleusercontent.com/img/a/AVvXsEhekXgauksLsFufbIyGr_O4oYRJSObTmjAG03sOOJ1xZrRzT0WQB4eGjDLF5CqNRkQPJ8tR24TGxEJ1TSAPkCvkU3AkVpLxN3AqIyvc3EAfvBuuqJtx-n0U3gf1NJtXQ7PeVdVvUYtk8eWb6M9iAcuX3ZJ6NMrborwZYijrSQ-W5B6nfuWHw6asOYQwX5s' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Classroom Spotlight</div>
@@ -2910,7 +2928,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 
         <a class='prog-card prog-card--clickable' href='https://www.facebook.com/share/p/1EvqtvAihK/' rel='noopener noreferrer' target='_blank'>
           <div class='prog-card-img'>
-            <img alt='Empowering Educators for Inclusive Learning' src='https://blogger.googleusercontent.com/img/a/AVvXsEgtYvl0JYETa7a73ZiPcQ81TWkaCUT3d7CfAt-tZPjix58SZIWuTllqiwPOEXjWopBRytElW-uKWvtdUwi7th6WvFOjSz-phfx0h5y0jLeTz6saiurBr0nxK67kg2NZybjLEbuHITDSjNHCR-PoluN6Sulgh_CWlODpBWMb6Ed9aE5GXZscXl0T1yfuqNw'/>
+            <img alt='Empowering Educators for Inclusive Learning' src='https://blogger.googleusercontent.com/img/a/AVvXsEgtYvl0JYETa7a73ZiPcQ81TWkaCUT3d7CfAt-tZPjix58SZIWuTllqiwPOEXjWopBRytElW-uKWvtdUwi7th6WvFOjSz-phfx0h5y0jLeTz6saiurBr0nxK67kg2NZybjLEbuHITDSjNHCR-PoluN6Sulgh_CWlODpBWMb6Ed9aE5GXZscXl0T1yfuqNw' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Teacher Training</div>
@@ -2922,7 +2940,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 
         <a class='prog-card prog-card--clickable' href='https://www.facebook.com/share/p/1JLV8WPCvJ/' rel='noopener noreferrer' target='_blank'>
           <div class='prog-card-img'>
-            <img alt='Community Voices for Girls&apos; Education' src='https://blogger.googleusercontent.com/img/a/AVvXsEh_l_XwlUNcVyIis-rxgtWSyp2FbIcvEqcZx343WML_RkWKYo8kqNueZ6g4AeN0pesRRrVTaGcDg1Xp33WptjVKLuUPXhxE-IY24OWsBd4P7KOqpK8ljnMtc5C-71gKuWyHU-gEkNmjfRJiHVrtQbxXAlyPDEh52Dt-QxTQFgUH698AbFQ8NklNncE6Z-8'/>
+            <img alt='Community Voices for Girls&apos; Education' src='https://blogger.googleusercontent.com/img/a/AVvXsEh_l_XwlUNcVyIis-rxgtWSyp2FbIcvEqcZx343WML_RkWKYo8kqNueZ6g4AeN0pesRRrVTaGcDg1Xp33WptjVKLuUPXhxE-IY24OWsBd4P7KOqpK8ljnMtc5C-71gKuWyHU-gEkNmjfRJiHVrtQbxXAlyPDEh52Dt-QxTQFgUH698AbFQ8NklNncE6Z-8' decoding='async' loading='lazy'/>
           </div>
           <div class='prog-card-body'>
             <div class='prog-card-tag'>Community Engagement</div>
@@ -2947,11 +2965,11 @@ a.prog-card { text-decoration: none; color: inherit; }
   <section class='section' style='padding-bottom:0;'>
     <div class='container'>
       <div class='section-header--center section-header' style='margin-bottom:48px;'>
-        <h2 class='display-lg'>Our Team</h2>
+        <h1 class='display-lg'>Our Team</h1>
       </div>
       <div class='lead-profile-grid'>
         <div class='lead-img-frame'>
-          <img alt='R Alom Shah — Co-founder &amp; Director General RSU' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFihUat0oohOCqw9lL_4ZDp2gDFzB_aSAjE-IeC66ipw2oh1ujtLZPPZn709cEKZSoDE-GZneO-OrJ-q1mvMLa-qSKGRBB-VZ-dHIrcVKesdd3qaUeTls0k6XGzPdXm64PMJ4SMgMBd9kTjbTdrDM2CcqD-HRt1o68JBYF2K7bFNzx1-6jMrkxPzTjR1M/s320/20251026_164349(1)%20(1).jpg'/>
+          <img alt='R Alom Shah — Co-founder &amp; Director General RSU' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFihUat0oohOCqw9lL_4ZDp2gDFzB_aSAjE-IeC66ipw2oh1ujtLZPPZn709cEKZSoDE-GZneO-OrJ-q1mvMLa-qSKGRBB-VZ-dHIrcVKesdd3qaUeTls0k6XGzPdXm64PMJ4SMgMBd9kTjbTdrDM2CcqD-HRt1o68JBYF2K7bFNzx1-6jMrkxPzTjR1M/s320/20251026_164349(1)%20(1).jpg' decoding='async' loading='lazy'/>
         </div>
         <div>
           <h2 class='lead-name'>R Alom Shah</h2>
@@ -2974,7 +2992,7 @@ a.prog-card { text-decoration: none; color: inherit; }
   <section class='section gallery-section'>
     <div class='container'>
       <div class='section-header--center section-header'>
-        <h2 class='display-lg'>Our Gallery</h2>
+        <h1 class='display-lg'>Our Gallery</h1>
         <p class='body-lg' style='max-width:640px;margin:16px auto 0;'>A look at the students, workshops, and camps behind RSU&#39;s work &#8212; click any photo to view it larger.</p>
       </div>
       <div class='gallery-grid' id='galleryGrid'>
@@ -3205,7 +3223,7 @@ a.prog-card { text-decoration: none; color: inherit; }
   <section class='section' style='padding-bottom:0;'>
     <div class='container'>
       <div class='section-header--center section-header' style='margin-bottom:48px;'>
-        <h2 class='display-lg'>Get In Touch</h2>
+        <h1 class='display-lg'>Get In Touch</h1>
       </div>
       <div class='contact-grid'>
         <div class='contact-info-card'>
@@ -3221,7 +3239,7 @@ a.prog-card { text-decoration: none; color: inherit; }
             <span class='ci-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8' viewBox='0 0 24 24'><circle cx='12' cy='12' r='2'/><path d='M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2'/></svg></span>
             <div>
               <div class='contact-info-label'>Broadcast Node</div>
-              <div class='contact-info-val'><a href='https://www.facebook.com/rsuincamp' target='_blank'>facebook.com/rsuincamp</a></div>
+              <div class='contact-info-val'><a href='https://www.facebook.com/rsuincamp' rel='noopener noreferrer' target='_blank'>facebook.com/rsuincamp</a></div>
             </div>
           </div>
           <div class='contact-info-item'>
@@ -3236,22 +3254,22 @@ a.prog-card { text-decoration: none; color: inherit; }
           <h3 class='display-sm' style='margin-bottom:28px;'>Send a Message</h3>
           <form id='contactForm' onsubmit='return submitContactForm(event);'>
             <div class='form-group'>
-              <label class='form-label'>Your Name / Institution</label>
-              <input class='form-input' id='cfName' placeholder='Your Name or Allied Agency' required='required' type='text'/>
+              <label class='form-label' for='cfName'>Your Name / Institution</label>
+              <input autocomplete='name' class='form-input' id='cfName' placeholder='Your Name or Allied Agency' required='required' type='text'/>
             </div>
             <div class='form-group'>
-              <label class='form-label'>Email Address</label>
-              <input class='form-input' id='cfEmail' placeholder='secure@domain.org' required='required' type='email'/>
+              <label class='form-label' for='cfEmail'>Email Address</label>
+              <input autocomplete='email' class='form-input' id='cfEmail' placeholder='secure@domain.org' required='required' type='email'/>
             </div>
             <div class='form-group'>
-              <label class='form-label'>Message</label>
+              <label class='form-label' for='cfMessage'>Message</label>
               <textarea class='form-input' id='cfMessage' placeholder='Outline your programmatic objectives or collaboration proposal...' required='required' style='min-height:160px; resize:vertical;'></textarea>
             </div>
             <button class='btn btn-primary' style='width:100%; justify-content:center; padding:16px;' type='submit'>Send Message</button>
             <div class='cf-success' id='cfSuccess'>
-              <svg viewBox='0 0 52 52'><circle cx='26' cy='26' fill='none' r='23'/><path d='M14 27l8 8 16-16' fill='none'/></svg>
+              <svg aria-hidden='true' viewBox='0 0 52 52'><circle cx='26' cy='26' fill='none' r='23'/><path d='M14 27l8 8 16-16' fill='none'/></svg>
             </div>
-            <p class='body-xs' id='cfHint' style='margin-top:14px; text-align:center;'>This opens your email app with the message pre-filled to rsu.incamp@gmail.com &#8212; just hit send there.</p>
+            <p aria-live='polite' class='body-xs' id='cfHint' style='margin-top:14px; text-align:center;'>Clicking Send Message opens your email app with your message pre-filled to rsu.incamp@gmail.com. Nothing is sent from this page &#8212; you must press Send in your email app yourself.</p>
           </form>
         </div>
       </div>
@@ -3263,7 +3281,7 @@ a.prog-card { text-decoration: none; color: inherit; }
   <section class='section'>
     <div class='container'>
       <div class='section-header--center section-header' style='margin-bottom:48px;'>
-        <h2 class='display-lg'>Support Our Mission</h2>
+        <h1 class='display-lg'>Support Our Mission</h1>
         <p class='body-lg donate-lead'>Your generosity helps the Rohingya Student Union empower Rohingya students through education, leadership, and advocacy.</p>
       </div>
       <div class='donate-grid'>
@@ -3306,17 +3324,17 @@ a.prog-card { text-decoration: none; color: inherit; }
       <div class='donate-use-grid'>
         <div class='donate-use-card'>
           <div class='info-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8' viewBox='0 0 24 24'><path d='M22 10L12 5 2 10l10 5 10-5z'/><path d='M6 12v5c3 2 9 2 12 0v-5'/></svg></div>
-          <h4>Education &amp; Empowerment</h4>
+          <h3>Education &amp; Empowerment</h3>
           <p class='body-sm'>Expanding access to quality education and skill-building so every Rohingya student can pursue their potential with confidence and purpose.</p>
         </div>
         <div class='donate-use-card'>
           <div class='info-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8' viewBox='0 0 24 24'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75'/></svg></div>
-          <h4>Leadership Development</h4>
+          <h3>Leadership Development</h3>
           <p class='body-sm'>Cultivating the next generation of Rohingya leaders through mentorship, training, and hands-on experience in organizing and decision-making.</p>
         </div>
         <div class='donate-use-card'>
           <div class='info-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8' viewBox='0 0 24 24'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg></div>
-          <h4>Human Rights &amp; Advocacy</h4>
+          <h3>Human Rights &amp; Advocacy</h3>
           <p class='body-sm'>Championing the rights of Rohingya students and communities through education, awareness campaigns, and engagement with international human rights frameworks.</p>
         </div>
       </div>
@@ -3336,7 +3354,7 @@ a.prog-card { text-decoration: none; color: inherit; }
 <main class='post-view'></main>
 
 <!-- PROGRAM FULL-SCREEN DETAIL OVERLAY (kept outside .page elements so its fixed positioning is relative to the viewport, not a transformed ancestor) -->
-<div id='progPage'>
+<div aria-labelledby='ppTitle' aria-modal='true' id='progPage' role='dialog'>
   <div id='progPageInner'></div>
 </div>
 
@@ -3346,7 +3364,7 @@ a.prog-card { text-decoration: none; color: inherit; }
     <div class='footer-grid'>
       <div class='footer-brand'>
         <div class='footer-brand-logo'>
-          <img alt='RSU' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiNCCb0rkMha2JNyumruB5W6d2gWWWqQv1TQ2Rix9E1NZT-nv-FayBsiNIA_z48X7VLemrfJ5mHK8JX2H7qJs9Tmk2w7KLgGSKFyZ0SrM48sMBMOgUkIkk8DmJHdZrhVdFDJ21coL1B2jM1sCBdJnG2Ytb6XbZkqdCLU8th6IsY_-iUfNYH3-adcwiMPg4/s2048/397913539_643716437944433_2503314930701785591_n.jpg'/>
+          <img alt='RSU' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiNCCb0rkMha2JNyumruB5W6d2gWWWqQv1TQ2Rix9E1NZT-nv-FayBsiNIA_z48X7VLemrfJ5mHK8JX2H7qJs9Tmk2w7KLgGSKFyZ0SrM48sMBMOgUkIkk8DmJHdZrhVdFDJ21coL1B2jM1sCBdJnG2Ytb6XbZkqdCLU8th6IsY_-iUfNYH3-adcwiMPg4/s2048/397913539_643716437944433_2503314930701785591_n.jpg' decoding='async' loading='lazy'/>
           <span class='footer-brand-name'>Rohingya Student Union</span>
         </div>
         <p class='footer-tagline'>Transforming institutional limitations into sovereign opportunities for youth leadership and academic self-determination.</p>
@@ -3370,7 +3388,7 @@ a.prog-card { text-decoration: none; color: inherit; }
       <div>
         <div class='footer-col-head'>Connect</div>
         <ul class='footer-links'>
-          <li><a href='https://www.facebook.com/rsuincamp' target='_blank'>Facebook Portal</a></li>
+          <li><a href='https://www.facebook.com/rsuincamp' rel='noopener noreferrer' target='_blank'>Facebook Portal</a></li>
           <li><a href='mailto:rsu.incamp@gmail.com'>Direct Email</a></li>
         </ul>
       </div>
@@ -3391,20 +3409,35 @@ function renderPage(pageId) {
   if (!nextPage) return;
   var currentPage = document.querySelector('.page.active');
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var moveFocus = !!window._navReady;   /* false for the very first render on page load */
 
   function activateNext() {
     document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active', 'leaving'); });
-    document.querySelectorAll('.nav-links button, .mobile-drawer-links button').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.nav-links button, .mobile-drawer-links button').forEach(function(b) { b.classList.remove('active'); b.removeAttribute('aria-current'); });
 
     nextPage.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
 
     var navBtn = document.getElementById('nav-' + (pageId === 'team' ? 'about' : pageId));   /* Our Team is a child of About */
     if (navBtn) navBtn.classList.add('active');
     var mobileNavBtn = document.getElementById('mnav-' + pageId);
     if (mobileNavBtn) mobileNavBtn.classList.add('active');
+    if (navBtn) navBtn.setAttribute('aria-current', pageId === 'team' ? 'true' : 'page');
+    if (mobileNavBtn) mobileNavBtn.setAttribute('aria-current', 'page');
+    var subNavBtn = document.getElementById('nav-sub-' + pageId);
+    if (subNavBtn) subNavBtn.setAttribute('aria-current', 'page');
     updateNavPill();
     setTimeout(updateNavPill, 150);
+
+    /* Move keyboard/screen-reader focus to the new view's heading (not on first load, and not while a report is open) */
+    var reportOpen = document.getElementById('progPage').classList.contains('open');
+    if (moveFocus && !reportOpen) {
+      var heading = nextPage.querySelector('h1, h2');
+      if (heading) {
+        heading.setAttribute('tabindex', '-1');
+        try { heading.focus({ preventScroll: true }); } catch (err) { heading.focus(); }
+      }
+    }
   }
 
   if (currentPage && currentPage !== nextPage && !reducedMotion) {
@@ -3506,6 +3539,7 @@ var lightboxIndex = 0;
 function openLightbox(i) {
   lightboxIndex = i;
   document.getElementById('lightboxImg').src = galleryImages[i];
+  document.getElementById('lightboxImg').alt = 'Gallery photo ' + (i + 1) + ' of ' + galleryImages.length;
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -3516,6 +3550,7 @@ function closeLightbox() {
 function lightboxNav(dir) {
   lightboxIndex = (lightboxIndex + dir + galleryImages.length) % galleryImages.length;
   document.getElementById('lightboxImg').src = galleryImages[lightboxIndex];
+  document.getElementById('lightboxImg').alt = 'Gallery photo ' + (lightboxIndex + 1) + ' of ' + galleryImages.length;
 }
 document.addEventListener('keydown', function(e) {
   var lb = document.getElementById('lightbox');
@@ -3647,7 +3682,7 @@ function submitContactForm(e) {
 
   var hint = document.getElementById('cfHint');
   if (hint) {
-    hint.textContent = 'Your email app should be opening now with the message pre-filled \u2014 just hit send there. If nothing opened, email us directly at rsu.incamp@gmail.com.';
+    hint.textContent = 'Your email app may be opening with the message pre-filled. It has not been sent yet \u2014 please review it and press Send in your email app yourself. If nothing opened, email us directly at rsu.incamp@gmail.com.';
     hint.style.color = 'var(--green-600)';
     hint.style.fontWeight = '600';
   }
@@ -3681,7 +3716,23 @@ function heroBgNext() {
   heroBgIndex = (heroBgIndex + 1) % slides.length;
   slides[heroBgIndex].classList.add('active');
 }
-setInterval(heroBgNext, 4500);
+/* Auto-advance only when the person has not asked for reduced motion, and only while the tab is visible */
+var heroBgTimer = null;
+var heroBgReduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+function heroBgStart() {
+  if (heroBgTimer || document.hidden || heroBgReduceMq.matches) return;
+  heroBgTimer = setInterval(heroBgNext, 4500);
+}
+function heroBgStop() {
+  if (heroBgTimer) { clearInterval(heroBgTimer); heroBgTimer = null; }
+}
+document.addEventListener('visibilitychange', function () {
+  if (document.hidden) heroBgStop(); else heroBgStart();
+});
+function heroBgMotionChanged() { if (heroBgReduceMq.matches) heroBgStop(); else heroBgStart(); }
+if (heroBgReduceMq.addEventListener) heroBgReduceMq.addEventListener('change', heroBgMotionChanged);
+else if (heroBgReduceMq.addListener) heroBgReduceMq.addListener(heroBgMotionChanged);
+heroBgStart();
 
 /* Manifesto slideshow */
 var msIndex = 0;
@@ -3763,6 +3814,7 @@ if (statYearsEl) {
 function animateStatCount(el) {
   var target = parseInt(el.getAttribute('data-target'), 10) || 0;
   var suffix = el.getAttribute('data-suffix') || '';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = target + suffix; return; }
   var duration = 1400;
   var startTime = null;
   function step(ts) {
@@ -4023,7 +4075,7 @@ function renderProgModal(idx) {
     + '<div class="pp-hero-overlay"></div>'
     + '<div class="pp-hero-content">'
     + '<span class="pp-hero-tag">' + loc.tag + '</span>'
-    + '<h1 class="pp-hero-title">' + loc.title + '</h1>'
+    + '<h1 class="pp-hero-title" id="ppTitle">' + loc.title + '</h1>'
     + '</div>'
     + '</div>';
 
@@ -4114,7 +4166,7 @@ function hideProgModal() {
   progData.slice(0, COUNT).forEach(function(d, i) {
     var feature = (i === 0);
     var a = el('a', 'latest-card' + (feature ? ' latest-card--feature' : ''));
-    a.href = '/#/advocacy/' + i;
+    a.href = '#/advocacy/' + i;
     a.onclick = function(e) { e.preventDefault(); openProgModal(i); };
 
     var imgBox = el('div', 'latest-img');
@@ -4203,6 +4255,10 @@ function route(force) {
   var idx = (page === 'advocacy' && /^\d+$/.test(parts[1] || '')) ? parseInt(parts[1], 10) : -1;
   var hasReport = idx >= 0 && !!progData[idx];
 
+  /* Tidy the address bar when it holds a route that doesn't exist (the view shown is unchanged) */
+  if (parts[0] && !document.getElementById('page-' + parts[0])) history.replaceState(null, '', '#/home');
+  else if (parts[0] === 'advocacy' && parts[1] && !hasReport) history.replaceState(null, '', '#/advocacy');
+
   var active = document.querySelector('.page.active');
   if (force || !active || active.id !== 'page-' + page) renderPage(page);
 
@@ -4218,6 +4274,7 @@ if (!document.body.classList.contains('pt-item')) {
     route();
   });
   route();   /* deep links such as /#/advocacy/3 or /#/team */
+  window._navReady = true;   /* later route changes may move focus to the new view's heading */
 }
 
 /* ── Blogger posts -> program cards ──
@@ -4362,8 +4419,98 @@ var PROGRAM_LABEL = '';
   li.addEventListener('mouseleave', function () { li.classList.remove('menu-closed'); });
   li.addEventListener('focusin', function () { li.classList.remove('menu-closed'); });
 })();
+/* ── Accessibility: dialog focus handling, gallery keyboard access (audit pass) ──
+   Additive only: it watches the existing 'open' classes, so the existing open/close code paths are unchanged. */
+(function () {
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var drawer = document.getElementById('mobileDrawer');
+  var lightbox = document.getElementById('lightbox');
+  var progPage = document.getElementById('progPage');
+  var trigger = document.getElementById('mobileTrigger');
+
+  function focusEl(el) {
+    if (!el) return;
+    try { el.focus({ preventScroll: true }); } catch (err) { el.focus(); }
+  }
+
+  /* When the dialog opens: remember the opener and move focus in. When it closes: put focus back
+     on the opener, unless focus has already been moved somewhere else (for example to a new view's heading). */
+  function watch(el, opts) {
+    if (!el || !window.MutationObserver) return;
+    var wasOpen = el.classList.contains('open');
+    var opener = null;
+    new MutationObserver(function () {
+      var isOpen = el.classList.contains('open');
+      if (isOpen === wasOpen) return;
+      wasOpen = isOpen;
+      if (isOpen) {
+        opener = document.activeElement;
+        if (opts.onOpen) opts.onOpen();
+        focusEl(el.querySelector(opts.first));
+      } else {
+        var ae = document.activeElement;
+        var focusWasHere = !ae || ae === document.body || el.contains(ae);
+        if (opts.onClose) opts.onClose();
+        if (focusWasHere) {
+          var back = (opener && opener !== document.body && document.contains(opener)) ? opener : opts.fallback;
+          focusEl(back);
+        }
+      }
+    }).observe(el, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  watch(drawer, {
+    first: '.mobile-close',
+    fallback: trigger,
+    onOpen: function () { drawer.removeAttribute('inert'); if (trigger) trigger.setAttribute('aria-expanded', 'true'); },
+    onClose: function () { drawer.setAttribute('inert', ''); if (trigger) trigger.setAttribute('aria-expanded', 'false'); }
+  });
+  watch(lightbox, {
+    first: '.lightbox-close',
+    onOpen: function () { lightbox.removeAttribute('inert'); },
+    onClose: function () { lightbox.setAttribute('inert', ''); }
+  });
+  watch(progPage, { first: '.pp-back' });
+
+  /* Keep Tab inside whichever dialog is open */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    var box = [progPage, lightbox, drawer].filter(function (el) { return el && el.classList.contains('open'); })[0];
+    if (!box) return;
+    var items = Array.prototype.filter.call(box.querySelectorAll(FOCUSABLE), function (n) { return n.getClientRects().length > 0; });
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1], ae = document.activeElement;
+    if (!box.contains(ae)) { e.preventDefault(); focusEl(first); }
+    else if (e.shiftKey && ae === first) { e.preventDefault(); focusEl(last); }
+    else if (!e.shiftKey && ae === last) { e.preventDefault(); focusEl(first); }
+  });
+
+  /* Escape closes the mobile menu */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && drawer && drawer.classList.contains('open')) toggleMobileMenu();
+  });
+
+  /* Gallery photos: reachable and operable from the keyboard (Enter / Space) */
+  var grid = document.getElementById('galleryGrid');
+  if (grid) {
+    var photos = grid.querySelectorAll('.gallery-item');
+    photos.forEach(function (el, i) {
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      var m = /openLightbox\((\d+)\)/.exec(el.getAttribute('onclick') || '');
+      var num = m ? parseInt(m[1], 10) + 1 : i + 1;   /* same numbering the lightbox uses */
+      var total = (typeof galleryImages !== 'undefined' && galleryImages.length) ? galleryImages.length : photos.length;
+      el.setAttribute('aria-label', 'Open photo ' + num + ' of ' + total);
+    });
+    grid.addEventListener('keydown', function (e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('gallery-item')) {
+        e.preventDefault();
+        e.target.click();
+      }
+    });
+  }
+})();
 //]]>
 </script>
 </body>
 </html>
-<!-- RSU deployment test -->
