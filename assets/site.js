@@ -677,9 +677,43 @@ var progData = [
       ]},
       { heading: 'Acknowledgement', type: 'prose', content: 'RSU extends its sincere gratitude to every participant whose enthusiasm and commitment made the training a success, and to the dedicated trainers whose expertise ensured an engaging and impactful learning experience. The successful completion of this fifth DRM Training marks another milestone in RSU&#39;s ongoing mission to empower the Rohingya community with life-saving knowledge and practical skills.' }
     ]
+
+  },
+  {
+    tag: 'Education Project',
+    title: 'Final-Term Teacher Development Workshop',
+    img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAGLZGFVByccpExAcJcnDReU_P9YqsWuLHGHEG5P5jcp9u-r3LU4FW6S-geYFVIFQ8iCuZl59tn8teuFPcSaWOl7RtY1GpwxTjBAnhDjfRYfCBFy4UqjIX83TvfYoY35-6BtPJ0ZTYt96pvFlctY1I-qxFHEUHtaTNF8-v5ddBhz9G9BR9vRdafGEr-jI/s2048/758964303_1342166541432749_7409638839888242136_n.jpg',
+    meta: [
+      { label: 'Program', val: 'Literacy for Rohingya Girls' },
+      { label: 'Workshop', val: 'Final-Term Teacher Development Workshop' },
+      { label: 'Organized by', val: 'Rohingya Student Union (RSU)' }
+    ],
+    sections: [
+      {
+        heading: 'Overview',
+        type: 'prose',
+        content: 'The Final-Term Teacher Development Workshop for the Literacy for Rohingya Girls program brought educators together to reflect on their teaching journeys, celebrate progress, and prepare to make learning more effective for Rohingya girls.'
+      },
+      {
+        heading: 'Workshop Highlights',
+        type: 'list',
+        content: [
+          'Reviewed students’ mid-term progress',
+          'Identified learning gaps and shared classroom experiences',
+          'Developed practical strategies to strengthen reading and writing',
+          'Explored ways to improve speaking, listening, and mathematics instruction'
+        ]
+      },
+      {
+        heading: 'Moving Forward',
+        type: 'prose',
+        content: 'Together, the teachers renewed their commitment to helping every child receive quality education and achieve the program’s learning goals.'
+      }
+    ]
   }
 ];
 function escAttr(s) {
+
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 }
 function renderProgModal(idx) {
