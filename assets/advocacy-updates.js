@@ -53,13 +53,15 @@ var advocacyUpdates = [
 
   /* ↓↓↓  ADD NEW UPDATES HERE (newest first)  ↓↓↓ */
 
-  {
+  
+{
     title: "Final-Term Teacher Development Workshop",
     tag: "Education Project",
     description: "Every step toward a brighter future begins with dedicated teachers and a commitment to helping every child learn. The Final-Term Teacher Development Workshop for the Literacy for Rohingya Girls program brought educators together to reflect on their teaching journeys, celebrate progress, and prepare to make learning even more effective for Rohingya girls.\n\nDuring the workshop, teachers reviewed students’ mid-term progress, identified learning gaps, shared classroom experiences, and developed practical strategies to strengthen reading, writing, speaking, listening, and mathematics instruction. Together, they renewed their commitment to ensuring every child receives quality education and achieves the program’s learning goals.\n\nA heartfelt thank you to all participating teachers for their dedication, passion, and tireless efforts in shaping a brighter future for Rohingya children through education.\n\nTogether, we continue building brighter futures—one classroom at a time.",
     image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAGLZGFVByccpExAcJcnDReU_P9YqsWuLHGHEG5P5jcp9u-r3LU4FW6S-geYFVIFQ8iCuZl59tn8teuFPcSaWOl7RtY1GpwxTjBAnhDjfRYfCBFy4UqjIX83TvfYoY35-6BtPJ0ZTYt96pvFlctY1I-qxFHEUHtaTNF8-v5ddBhz9G9BR9vRdafGEr-jI/s2048/758964303_1342166541432749_7409638839888242136_n.jpg",
- 
-  },
+    link: "/advocacy/#report-8",
+    linkLabel: "Read Full Report"
+},
 
   // {
   //   title: "Title of the update",
