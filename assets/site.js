@@ -164,6 +164,89 @@ document.addEventListener('keydown', function(e) {
   }, { passive: true });
 })();
 
+/* ── Advocacy "Our Recents": updates listed in assets/advocacy-updates.js ──
+   Each entry becomes a card at the START of the #updatesGrid grid, built with the same
+   markup/classes as the hand-written cards in advocacy/index.html. This block runs BEFORE
+   the tilt and scroll-reveal code below, so those pick the new cards up automatically.
+   If the data file is missing or broken, nothing happens and the hand-written cards stay. */
+(function () {
+  var grid = document.getElementById('updatesGrid');
+  if (!grid || typeof advocacyUpdates === 'undefined' || !Array.isArray(advocacyUpdates)) return;
+
+  var EXT_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>';
+  var ARROW_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+  function text(v) { return (typeof v === 'string') ? v.trim() : ''; }
+  function make(tag, cls, txt) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt) n.textContent = txt;
+    return n;
+  }
+  /* Only http(s) links and paths on this site are accepted ("javascript:" etc. are refused).
+     A path without a leading slash ("assets/x.jpg") is treated as a path from the site root. */
+  function safeUrl(v) {
+    v = text(v);
+    if (!v || /^\/\//.test(v)) return '';
+    if (/^[a-z][a-z0-9+.\-]*:/i.test(v)) return /^https?:/i.test(v) ? v : '';
+    return v.charAt(0) === '/' ? v : '/' + v;
+  }
+
+  function buildCard(u) {
+    var title = text(u && u.title);
+    if (!title) throw new Error('an entry has no title');
+    var link = safeUrl(u.link);
+    var external = /^https?:/i.test(link);
+
+    var card;
+    if (link) {
+      card = make('a', 'prog-card prog-card--clickable');
+      card.href = link;
+      if (external) { card.target = '_blank'; card.rel = 'noopener noreferrer'; }
+    } else {
+      card = make('div', 'prog-card');
+    }
+
+    var imgUrl = safeUrl(u.image);
+    if (imgUrl) {
+      var wrap = make('div', 'prog-card-img');
+      var img = document.createElement('img');
+      img.src = imgUrl;
+      img.alt = text(u.imageAlt) || title;
+      img.decoding = 'async';
+      img.loading = 'lazy';
+      wrap.appendChild(img);
+      card.appendChild(wrap);
+    }
+
+    var body = make('div', 'prog-card-body');
+    var label = [text(u.tag), text(u.date)].filter(Boolean).join(' \u00b7 ');
+    body.appendChild(make('div', 'prog-card-tag', label || 'Update'));
+    body.appendChild(make('h3', 'prog-title', title));
+    var desc = text(u.description);
+    if (desc) {
+      var p = make('p', 'body-sm', desc);
+      p.style.marginBottom = '16px';
+      body.appendChild(p);
+    }
+    if (link) {
+      var more = make('span', 'prog-read-more');
+      more.appendChild(make('span', '', text(u.linkLabel) || (external ? 'View Post' : 'Read More')));
+      more.insertAdjacentHTML('beforeend', ' ' + (external ? EXT_ICON : ARROW_ICON));
+      body.appendChild(more);
+    }
+    card.appendChild(body);
+    return card;
+  }
+
+  var frag = document.createDocumentFragment();
+  advocacyUpdates.forEach(function (u, i) {
+    try { frag.appendChild(buildCard(u)); }
+    catch (err) { if (window.console) console.warn('advocacy-updates.js: update #' + (i + 1) + ' skipped - ' + err.message); }
+  });
+  grid.insertBefore(frag, grid.firstChild);          /* newest first, above the hand-written cards */
+})();
+
 /* Subtle 3D tilt on impact/program cards: rotates a few degrees
    toward the cursor, layered on top of the existing lift-on-hover.
    Same device/motion gating as the hero spotlight above. Clearing
@@ -386,6 +469,9 @@ if ('IntersectionObserver' in window) {
   });
 }
 
+/* NOTE: the report cards on /advocacy/ (advocacy/index.html) open a report BY POSITION:
+   card N runs openProgModal(N) and links to #report-N. Adding or reordering entries here
+   changes which report each card opens, so the card numbers must be updated to match. */
 var progData = [
   {
     tag: 'Education · Train-the-Teacher Workshop',
@@ -677,7 +763,8 @@ function hideProgModal() {
 }
 /* Latest Update (home): shows the first 3 entries of progData, the same
    newest-first list that feeds the Advocacy page. Add a new report at the
-   TOP of progData and it appears here automatically. */
+   TOP of progData and it appears here automatically.
+   (Adding a report at the top shifts every report number: see the NOTE above progData.) */
 (function() {
   var grid = document.getElementById('latestGrid');
   if (!grid || typeof progData === 'undefined') return;
@@ -807,6 +894,7 @@ var PROGRAM_LABEL = '';
 (function () {
   var grid = document.getElementById('programsGrid');
   if (!grid || !window.fetch) return;
+  if (typeof ADVOCACY_USE_BLOGGER_FEED !== 'undefined' && ADVOCACY_USE_BLOGGER_FEED === false) return;   /* switch lives in assets/advocacy-updates.js */
 
   var ARROW = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
   function make(tag, cls, text) {
