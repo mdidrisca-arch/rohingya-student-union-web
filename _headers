@@ -1,0 +1,9 @@
+# Cloudflare Pages response headers (https://developers.cloudflare.com/pages/configuration/headers/)
+
+# Shared CSS/JS. Page links carry ?v=<hash> that changes whenever these files change,
+# so a day of caching is safe and a stale file can never outlive a deploy by more than that.
+/assets/*
+  Cache-Control: public, max-age=86400
+
+/*
+  X-Content-Type-Options: nosniff
