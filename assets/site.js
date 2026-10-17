@@ -164,16 +164,17 @@ document.addEventListener('keydown', function(e) {
   }, { passive: true });
 })();
 
-/* ── Advocacy "Our Recents": updates listed in assets/advocacy-updates.js ──
-   Each entry becomes a card at the START of the #updatesGrid grid, built with the same
-   markup/classes as the hand-written cards in advocacy/index.html. This block runs BEFORE
-   the tilt and scroll-reveal code below, so those pick the new cards up automatically.
-   If the data file is missing or broken, nothing happens and the hand-written cards stay. */
+/* ── Advocacy "Our Advocacy" grid: updates listed in assets/advocacy-updates.js ──
+   Each entry becomes a card at the START of the #programsGrid grid (in front of the eight
+   hand-written report cards), built with the same markup/classes as the other cards.
+   These cards are NOT in progData and never call openProgModal(N), so they cannot change the
+   number or destination of any existing report. "Our Recents" is not touched.
+   This block runs BEFORE the tilt and scroll-reveal code below, so those pick the new cards
+   up automatically. If the data file is missing or broken, nothing happens. */
 (function () {
-  var grid = document.getElementById('updatesGrid');
+  var grid = document.getElementById('programsGrid');
   if (!grid || typeof advocacyUpdates === 'undefined' || !Array.isArray(advocacyUpdates)) return;
 
-  var EXT_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>';
   var ARROW_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
 
   function text(v) { return (typeof v === 'string') ? v.trim() : ''; }
@@ -223,16 +224,19 @@ document.addEventListener('keydown', function(e) {
     var label = [text(u.tag), text(u.date)].filter(Boolean).join(' \u00b7 ');
     body.appendChild(make('div', 'prog-card-tag', label || 'Update'));
     body.appendChild(make('h3', 'prog-title', title));
-    var desc = text(u.description);
-    if (desc) {
-      var p = make('p', 'body-sm', desc);
+    /* Description: "\n\n" typed inside the quotes starts a new paragraph. Every paragraph uses the
+       same text style and spacing as the description on the other cards. */
+    text(u.description).split(/\n+/).forEach(function (para) {
+      para = para.trim();
+      if (!para) return;
+      var p = make('p', 'body-sm', para);
       p.style.marginBottom = '16px';
       body.appendChild(p);
-    }
+    });
     if (link) {
       var more = make('span', 'prog-read-more');
-      more.appendChild(make('span', '', text(u.linkLabel) || (external ? 'View Post' : 'Read More')));
-      more.insertAdjacentHTML('beforeend', ' ' + (external ? EXT_ICON : ARROW_ICON));
+      more.appendChild(make('span', '', text(u.linkLabel) || 'Read Full Report'));
+      more.insertAdjacentHTML('beforeend', ' ' + ARROW_ICON);
       body.appendChild(more);
     }
     card.appendChild(body);
@@ -244,7 +248,7 @@ document.addEventListener('keydown', function(e) {
     try { frag.appendChild(buildCard(u)); }
     catch (err) { if (window.console) console.warn('advocacy-updates.js: update #' + (i + 1) + ' skipped - ' + err.message); }
   });
-  grid.insertBefore(frag, grid.firstChild);          /* newest first, above the hand-written cards */
+  grid.insertBefore(frag, grid.firstChild);          /* newest first, in front of the 8 report cards */
 })();
 
 /* Subtle 3D tilt on impact/program cards: rotates a few degrees
@@ -471,7 +475,8 @@ if ('IntersectionObserver' in window) {
 
 /* NOTE: the report cards on /advocacy/ (advocacy/index.html) open a report BY POSITION:
    card N runs openProgModal(N) and links to #report-N. Adding or reordering entries here
-   changes which report each card opens, so the card numbers must be updated to match. */
+   changes which report each card opens, so the card numbers must be updated to match.
+   (Updates added in assets/advocacy-updates.js do NOT use these numbers and are safe.) */
 var progData = [
   {
     tag: 'Education · Train-the-Teacher Workshop',
@@ -672,9 +677,43 @@ var progData = [
       ]},
       { heading: 'Acknowledgement', type: 'prose', content: 'RSU extends its sincere gratitude to every participant whose enthusiasm and commitment made the training a success, and to the dedicated trainers whose expertise ensured an engaging and impactful learning experience. The successful completion of this fifth DRM Training marks another milestone in RSU&#39;s ongoing mission to empower the Rohingya community with life-saving knowledge and practical skills.' }
     ]
+
+  },
+  {
+    tag: 'Education Project',
+    title: 'Final-Term Teacher Development Workshop',
+    img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAGLZGFVByccpExAcJcnDReU_P9YqsWuLHGHEG5P5jcp9u-r3LU4FW6S-geYFVIFQ8iCuZl59tn8teuFPcSaWOl7RtY1GpwxTjBAnhDjfRYfCBFy4UqjIX83TvfYoY35-6BtPJ0ZTYt96pvFlctY1I-qxFHEUHtaTNF8-v5ddBhz9G9BR9vRdafGEr-jI/s2048/758964303_1342166541432749_7409638839888242136_n.jpg',
+    meta: [
+      { label: 'Program', val: 'Literacy for Rohingya Girls' },
+      { label: 'Workshop', val: 'Final-Term Teacher Development Workshop' },
+      { label: 'Organized by', val: 'Rohingya Student Union (RSU)' }
+    ],
+    sections: [
+      {
+        heading: 'Overview',
+        type: 'prose',
+        content: 'The Final-Term Teacher Development Workshop for the Literacy for Rohingya Girls program brought educators together to reflect on their teaching journeys, celebrate progress, and prepare to make learning more effective for Rohingya girls.'
+      },
+      {
+        heading: 'Workshop Highlights',
+        type: 'list',
+        content: [
+          'Reviewed students’ mid-term progress',
+          'Identified learning gaps and shared classroom experiences',
+          'Developed practical strategies to strengthen reading and writing',
+          'Explored ways to improve speaking, listening, and mathematics instruction'
+        ]
+      },
+      {
+        heading: 'Moving Forward',
+        type: 'prose',
+        content: 'Together, the teachers renewed their commitment to helping every child receive quality education and achieve the program’s learning goals.'
+      }
+    ]
   }
 ];
 function escAttr(s) {
+
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 }
 function renderProgModal(idx) {
