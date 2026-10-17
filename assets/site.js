@@ -175,7 +175,6 @@ document.addEventListener('keydown', function(e) {
   var grid = document.getElementById('programsGrid');
   if (!grid || typeof advocacyUpdates === 'undefined' || !Array.isArray(advocacyUpdates)) return;
 
-  var EXT_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>';
   var ARROW_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
 
   function text(v) { return (typeof v === 'string') ? v.trim() : ''; }
@@ -225,16 +224,19 @@ document.addEventListener('keydown', function(e) {
     var label = [text(u.tag), text(u.date)].filter(Boolean).join(' \u00b7 ');
     body.appendChild(make('div', 'prog-card-tag', label || 'Update'));
     body.appendChild(make('h3', 'prog-title', title));
-    var desc = text(u.description);
-    if (desc) {
-      var p = make('p', 'body-sm', desc);
+    /* Description: "\n\n" typed inside the quotes starts a new paragraph. Every paragraph uses the
+       same text style and spacing as the description on the other cards. */
+    text(u.description).split(/\n+/).forEach(function (para) {
+      para = para.trim();
+      if (!para) return;
+      var p = make('p', 'body-sm', para);
       p.style.marginBottom = '16px';
       body.appendChild(p);
-    }
+    });
     if (link) {
       var more = make('span', 'prog-read-more');
-      more.appendChild(make('span', '', text(u.linkLabel) || (external ? 'View Post' : 'Read More')));
-      more.insertAdjacentHTML('beforeend', ' ' + (external ? EXT_ICON : ARROW_ICON));
+      more.appendChild(make('span', '', text(u.linkLabel) || 'Read Full Report'));
+      more.insertAdjacentHTML('beforeend', ' ' + ARROW_ICON);
       body.appendChild(more);
     }
     card.appendChild(body);
