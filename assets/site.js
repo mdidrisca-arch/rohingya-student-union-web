@@ -164,13 +164,15 @@ document.addEventListener('keydown', function(e) {
   }, { passive: true });
 })();
 
-/* ── Advocacy "Our Recents": updates listed in assets/advocacy-updates.js ──
-   Each entry becomes a card at the START of the #updatesGrid grid, built with the same
-   markup/classes as the hand-written cards in advocacy/index.html. This block runs BEFORE
-   the tilt and scroll-reveal code below, so those pick the new cards up automatically.
-   If the data file is missing or broken, nothing happens and the hand-written cards stay. */
+/* ── Advocacy "Our Advocacy" grid: updates listed in assets/advocacy-updates.js ──
+   Each entry becomes a card at the START of the #programsGrid grid (in front of the eight
+   hand-written report cards), built with the same markup/classes as the other cards.
+   These cards are NOT in progData and never call openProgModal(N), so they cannot change the
+   number or destination of any existing report. "Our Recents" is not touched.
+   This block runs BEFORE the tilt and scroll-reveal code below, so those pick the new cards
+   up automatically. If the data file is missing or broken, nothing happens. */
 (function () {
-  var grid = document.getElementById('updatesGrid');
+  var grid = document.getElementById('programsGrid');
   if (!grid || typeof advocacyUpdates === 'undefined' || !Array.isArray(advocacyUpdates)) return;
 
   var EXT_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>';
@@ -244,7 +246,7 @@ document.addEventListener('keydown', function(e) {
     try { frag.appendChild(buildCard(u)); }
     catch (err) { if (window.console) console.warn('advocacy-updates.js: update #' + (i + 1) + ' skipped - ' + err.message); }
   });
-  grid.insertBefore(frag, grid.firstChild);          /* newest first, above the hand-written cards */
+  grid.insertBefore(frag, grid.firstChild);          /* newest first, in front of the 8 report cards */
 })();
 
 /* Subtle 3D tilt on impact/program cards: rotates a few degrees
@@ -471,7 +473,8 @@ if ('IntersectionObserver' in window) {
 
 /* NOTE: the report cards on /advocacy/ (advocacy/index.html) open a report BY POSITION:
    card N runs openProgModal(N) and links to #report-N. Adding or reordering entries here
-   changes which report each card opens, so the card numbers must be updated to match. */
+   changes which report each card opens, so the card numbers must be updated to match.
+   (Updates added in assets/advocacy-updates.js do NOT use these numbers and are safe.) */
 var progData = [
   {
     tag: 'Education · Train-the-Teacher Workshop',
