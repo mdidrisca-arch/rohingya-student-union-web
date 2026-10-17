@@ -1,9 +1,10 @@
 /* =====================================================================
    ADVOCACY UPDATES  -  the one file you edit to add a new update
    ---------------------------------------------------------------------
-   Everything you add to the list below appears at the TOP of the
-   "Our Recents" section on /advocacy/, using the same card design as
-   the existing cards. Nothing else needs to be edited.
+   Everything you add to the list below appears at the START of the
+   "Our Advocacy" section on /advocacy/, in front of the existing report
+   cards, using the same card design. Nothing else needs to be edited.
+   (The "Our Recents" section is not affected.)
 
    HOW TO ADD AN UPDATE
    1. Find the line marked "ADD NEW UPDATES HERE" below.
@@ -37,11 +38,11 @@
    ===================================================================== */
 
 
-/* SETTING - Blogger feed on the Advocacy "Our Advocacy" grid.
-   true  = keep the current behaviour: any post published on the old Blogger blog
-           (rostudentunion.blogspot.com) is added as an extra card at the start
-           of the "Our Advocacy" grid.
-   false = turn that off, so the page shows only the cards written in the site's own files.
+/* SETTING - Blogger feed on the "Our Advocacy" grid (unchanged behaviour when true).
+   true  = any post published on the old Blogger blog (rostudentunion.blogspot.com)
+           is added as an extra card at the very start of the "Our Advocacy" grid
+           (above the updates listed below).
+   false = turn that off, so the grid shows only the cards written in the site's own files.
    Changing this does not affect the updates listed below. */
 var ADVOCACY_USE_BLOGGER_FEED = true;
 
@@ -49,6 +50,14 @@ var ADVOCACY_USE_BLOGGER_FEED = true;
 var advocacyUpdates = [
 
   /* ↓↓↓  ADD NEW UPDATES HERE (newest first)  ↓↓↓ */
+
+  {
+    title: "Final-Term Teacher Development Workshop",
+    tag: "Education Project",
+    description: "Every step toward a brighter future begins with dedicated teachers and a commitment to helping every child learn. The Final-Term Teacher Development Workshop for the Literacy for Rohingya Girls program brought educators together to reflect on their teaching journeys, celebrate progress, and prepare to make learning even more effective for Rohingya girls. During the workshop, teachers reviewed students’ mid-term progress, identified learning gaps, shared classroom experiences, and developed practical strategies to strengthen reading, writing, speaking, listening, and mathematics instruction. Together, they renewed their commitment to ensuring every child receives quality education and achieves the program’s learning goals. A heartfelt thank you to all participating teachers for their dedication, passion, and tireless efforts in shaping a brighter future for Rohingya children through education. Together, we continue building brighter futures—one classroom at a time.",
+    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAGLZGFVByccpExAcJcnDReU_P9YqsWuLHGHEG5P5jcp9u-r3LU4FW6S-geYFVIFQ8iCuZl59tn8teuFPcSaWOl7RtY1GpwxTjBAnhDjfRYfCBFy4UqjIX83TvfYoY35-6BtPJ0ZTYt96pvFlctY1I-qxFHEUHtaTNF8-v5ddBhz9G9BR9vRdafGEr-jI/s320/758964303_1342166541432749_7409638839888242136_n.jpg",
+    link: "https://www.facebook.com/share/p/1SnKtPHidz/"
+  },
 
   // {
   //   title: "Title of the update",
