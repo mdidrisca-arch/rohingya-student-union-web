@@ -1,9 +1,11 @@
 # Cloudflare Pages response headers (https://developers.cloudflare.com/pages/configuration/headers/)
 
-# Shared CSS/JS. Page links carry ?v=<hash> that changes whenever these files change,
-# so a day of caching is safe and a stale file can never outlive a deploy by more than that.
+# Shared CSS/JS and the update data file (assets/advocacy-updates.js).
+# Browsers re-check these on every visit: a quick "has it changed?" request that normally
+# answers "no change", so an edit made in GitHub shows up for everyone right after the deploy.
+# (The ?v=<hash> on page links is harmless and can be left alone.)
 /assets/*
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=0, must-revalidate
 
 /*
   X-Content-Type-Options: nosniff
