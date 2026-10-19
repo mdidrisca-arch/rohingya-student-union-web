@@ -164,18 +164,20 @@ document.addEventListener('keydown', function(e) {
   }, { passive: true });
 })();
 
-/* ── Advocacy "Our Advocacy" grid: updates listed in assets/advocacy-updates.js ──
-   Each entry becomes a card at the START of the #programsGrid grid (in front of the eight
-   hand-written report cards), built with the same markup/classes as the other cards.
-   These cards are NOT in progData and never call openProgModal(N), so they cannot change the
-   number or destination of any existing report. "Our Recents" is not touched.
-   This block runs BEFORE the tilt and scroll-reveal code below, so those pick the new cards
-   up automatically. If the data file is missing or broken, nothing happens. */
+/* ── Cards on the Advocacy page: "Our Advocacy" and "Our Recents" ──
+   Each section is drawn from its OWN data file, so they cannot affect each other:
+     Our Advocacy -> assets/advocacy-updates.js   (list name: advocacyUpdates, grid: #programsGrid)
+     Our Recents  -> assets/recents-updates.js    (list name: recentsUpdates,  grid: #recentsGrid)
+   Cards use exactly the markup and classes the hand-written cards used. This block runs BEFORE the
+   tilt and scroll-reveal code below, so those pick the cards up automatically.
+   The page already holds a SAVED COPY of each section's cards as ordinary HTML (what visitors without
+   JavaScript, and search engines, see). When a data file loads with usable cards, they replace that copy.
+   If a data file is missing, broken, or has no usable cards, the saved copy simply stays on screen.
+   A report card ({ report: N }) opens report N exactly as before; it needs no other code. The report
+   data (progData) is defined further down this file, so the check that N exists is made there. */
 (function () {
-  var grid = document.getElementById('programsGrid');
-  if (!grid || typeof advocacyUpdates === 'undefined' || !Array.isArray(advocacyUpdates)) return;
-
   var ARROW_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  var EXT_ICON = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>';
 
   function text(v) { return (typeof v === 'string') ? v.trim() : ''; }
   function make(tag, cls, txt) {
@@ -192,15 +194,33 @@ document.addEventListener('keydown', function(e) {
     if (/^[a-z][a-z0-9+.\-]*:/i.test(v)) return /^https?:/i.test(v) ? v : '';
     return v.charAt(0) === '/' ? v : '/' + v;
   }
+  /* Report number of a card, or -1 when it is a link card. */
+  function reportNo(u) {
+    if (!u || u.report === undefined || u.report === null || u.report === '') return -1;
+    var n = Number(u.report);
+    if (!(n >= 0) || n % 1 !== 0) throw new Error('"' + u.report + '" is not a report number');
+    return n;
+  }
+  /* What makes a card "the same card": its report number, or its link. */
+  function cardKey(u) {
+    var n = reportNo(u);
+    if (n >= 0) return 'report:' + n;
+    var l = safeUrl(u && u.link);
+    return l ? 'link:' + l : '';
+  }
 
-  function buildCard(u) {
-    var title = text(u && u.title);
+  function buildCard(u, opt) {
+    var n = reportNo(u), rep = n >= 0;
+    var title = text(u.title);
     if (!title) throw new Error('an entry has no title');
-    var link = safeUrl(u.link);
-    var external = /^https?:/i.test(link);
+    var link = rep ? '/advocacy/#report-' + n : safeUrl(u.link);
+    var external = !rep && /^https?:/i.test(link);
 
     var card;
-    if (link) {
+    if (rep) {
+      card = make('div', 'prog-card prog-card--clickable');
+      card.setAttribute('onclick', 'openProgModal(' + n + ')');
+    } else if (link) {
       card = make('a', 'prog-card prog-card--clickable');
       card.href = link;
       if (external) { card.target = '_blank'; card.rel = 'noopener noreferrer'; }
@@ -224,8 +244,7 @@ document.addEventListener('keydown', function(e) {
     var label = [text(u.tag), text(u.date)].filter(Boolean).join(' \u00b7 ');
     body.appendChild(make('div', 'prog-card-tag', label || 'Update'));
     body.appendChild(make('h3', 'prog-title', title));
-    /* Description: "\n\n" typed inside the quotes starts a new paragraph. Every paragraph uses the
-       same text style and spacing as the description on the other cards. */
+    /* Description: "\n\n" typed inside the quotes starts a new paragraph. */
     text(u.description).split(/\n+/).forEach(function (para) {
       para = para.trim();
       if (!para) return;
@@ -234,21 +253,44 @@ document.addEventListener('keydown', function(e) {
       body.appendChild(p);
     });
     if (link) {
-      var more = make('span', 'prog-read-more');
-      more.appendChild(make('span', '', text(u.linkLabel) || 'Read Full Report'));
-      more.insertAdjacentHTML('beforeend', ' ' + ARROW_ICON);
+      var more = make(rep ? 'a' : 'span', 'prog-read-more');
+      if (rep) more.href = link;
+      more.appendChild(make('span', '', text(u.linkLabel) || opt.defaultLabel));
+      more.insertAdjacentHTML('beforeend', ' ' + ((external && opt.externalIcon) ? EXT_ICON : ARROW_ICON));
       body.appendChild(more);
     }
     card.appendChild(body);
     return card;
   }
 
-  var frag = document.createDocumentFragment();
-  advocacyUpdates.forEach(function (u, i) {
-    try { frag.appendChild(buildCard(u)); }
-    catch (err) { if (window.console) console.warn('advocacy-updates.js: update #' + (i + 1) + ' skipped - ' + err.message); }
-  });
-  grid.insertBefore(frag, grid.firstChild);          /* newest first, in front of the 8 report cards */
+  function renderSection(opt) {
+    var grid = document.getElementById(opt.gridId);
+    if (!grid) return;
+    try {
+      var list = window[opt.listName];
+      if (!Array.isArray(list)) { if (window.console) console.warn(opt.file + ' did not load - the saved copy of the cards stays on screen.'); return; }
+      var seen = {}, frag = document.createDocumentFragment(), shown = 0;
+      list.forEach(function (u, i) {
+        try {
+          var key = cardKey(u);
+          if (key && seen[key]) { if (window.console) console.warn(opt.file + ': card #' + (i + 1) + ' repeats ' + key + ' and was skipped'); return; }
+          frag.appendChild(buildCard(u, opt));
+          if (key) seen[key] = true;
+          shown++;
+        } catch (err) { if (window.console) console.warn(opt.file + ': card #' + (i + 1) + ' skipped - ' + err.message); }
+      });
+      if (!shown) { if (window.console) console.warn(opt.file + ' has no usable cards - the saved copy stays on screen.'); return; }
+      Array.prototype.slice.call(grid.children).forEach(function (el) {      /* remove the saved copy of THIS grid only */
+        if (el.classList && el.classList.contains('prog-card')) grid.removeChild(el);
+      });
+      grid.insertBefore(frag, grid.firstChild);          /* newest first */
+    } catch (err) {
+      if (window.console) console.warn(opt.file + ' failed - ' + err.message + ' - the saved copy stays on screen.');
+    }
+  }
+
+  renderSection({ gridId: 'programsGrid', listName: 'advocacyUpdates', file: 'advocacy-updates.js', defaultLabel: 'Read Full Report', externalIcon: false });
+  renderSection({ gridId: 'recentsGrid',  listName: 'recentsUpdates',  file: 'recents-updates.js',  defaultLabel: 'View Post',        externalIcon: true });
 })();
 
 /* Subtle 3D tilt on impact/program cards: rotates a few degrees
@@ -473,10 +515,10 @@ if ('IntersectionObserver' in window) {
   });
 }
 
-/* NOTE: the report cards on /advocacy/ (advocacy/index.html) open a report BY POSITION:
-   card N runs openProgModal(N) and links to #report-N. Adding or reordering entries here
-   changes which report each card opens, so the card numbers must be updated to match.
-   (Updates added in assets/advocacy-updates.js do NOT use these numbers and are safe.) */
+/* NOTE: reports are identified by their POSITION in this list: report N opens with #report-N, and the
+   cards in assets/advocacy-updates.js refer to them as { report: N }. Add new reports at the END of this
+   list (so existing numbers never change), then add a { report: N } card to advocacy-updates.js.
+   The home page "Latest" section shows the first three entries of this list. */
 var progData = [
   {
     tag: 'Education · Train-the-Teacher Workshop',
@@ -800,10 +842,21 @@ function hideProgModal() {
   var pp = document.getElementById('progPage');
   if (pp) pp.classList.remove('open');
 }
+/* Safety check for report cards listed in the Advocacy data files ({ report: N }): progData is defined just
+   above, so this is the first place that can confirm N exists. A card for a missing report is removed. */
+(function () {
+  Array.prototype.slice.call(document.querySelectorAll('.programs-full-grid > .prog-card[onclick^="openProgModal("]')).forEach(function (c) {
+    var n = parseInt(c.getAttribute('onclick').replace(/\D/g, ''), 10);
+    if (!progData[n]) {
+      if (window.console) console.warn('A card for report ' + n + ' was removed: there is no report ' + n + ' in progData (assets/site.js).');
+      c.parentNode.removeChild(c);
+    }
+  });
+})();
+
 /* Latest Update (home): shows the first 3 entries of progData, the same
-   newest-first list that feeds the Advocacy page. Add a new report at the
-   TOP of progData and it appears here automatically.
-   (Adding a report at the top shifts every report number: see the NOTE above progData.) */
+   list that feeds the Advocacy page. It shows the first three entries.
+   (New reports are added at the END of progData so existing report numbers never change; see the NOTE above progData.) */
 (function() {
   var grid = document.getElementById('latestGrid');
   if (!grid || typeof progData === 'undefined') return;
@@ -922,80 +975,6 @@ if (document.getElementById('progPage')) {
   });
   routeReport();   /* deep links such as /advocacy/#report-3 */
 }
-
-/* ── Blogger posts -> program cards ──
-   Every post you publish in the Blogger dashboard becomes a card at the START of the
-   Programs grid, built with exactly the same markup/classes as the hand-written cards.
-   (Settings > Site feed must not be set to "None".)
-   To show only posts that carry a particular label, set PROGRAM_LABEL, e.g. 'Programs'.
-   Leave it empty to show every post. */
-var PROGRAM_LABEL = '';
-(function () {
-  var grid = document.getElementById('programsGrid');
-  if (!grid || !window.fetch) return;
-  if (typeof ADVOCACY_USE_BLOGGER_FEED !== 'undefined' && ADVOCACY_USE_BLOGGER_FEED === false) return;   /* switch lives in assets/advocacy-updates.js */
-
-  var ARROW = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-  function make(tag, cls, text) {
-    var e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text) e.textContent = text;
-    return e;
-  }
-
-  var url = 'https://rostudentunion.blogspot.com/feeds/posts/default' + (PROGRAM_LABEL ? '/-/' + encodeURIComponent(PROGRAM_LABEL) : '') + '?alt=json&max-results=12';
-  fetch(url)
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (d) {
-      var entries = d && d.feed && d.feed.entry;
-      if (!entries || !entries.length) return;
-      var frag = document.createDocumentFragment();
-
-      entries.forEach(function (e) {
-        var link = (e.link || []).filter(function (l) { return l.rel === 'alternate'; })[0];
-        if (!link) return;
-        var title = e.title && e.title.$t ? e.title.$t : 'Untitled';
-        var html = e.content ? e.content.$t : (e.summary ? e.summary.$t : '');
-        var doc = new DOMParser().parseFromString(html, 'text/html');
-        /* card description = the first real text of the post: skip the Trainer/Venue strip, headings, tables */
-        var tdoc = new DOMParser().parseFromString(html, 'text/html');
-        tdoc.querySelectorAll('.pp-meta, h1, h2, h3, h4, h5, h6, table, figure, script, style').forEach(function (n) { n.remove(); });
-        tdoc.querySelectorAll('br, p, div, li').forEach(function (n) { n.appendChild(tdoc.createTextNode(' ')); });
-        var text = (tdoc.body.textContent || '').replace(/\s+/g, ' ').trim();
-        if (text.length > 170) text = text.slice(0, 170).replace(/\s+\S*$/, '') + '\u2026';
-
-        var imgUrl = e.media$thumbnail ? e.media$thumbnail.url.replace(/\/s72-c\//, '/s900/') : '';
-        if (!imgUrl) { var first = doc.querySelector('img'); if (first) imgUrl = first.getAttribute('src') || ''; }
-
-        /* same structure as the hand-written cards */
-        var card = make('a', 'prog-card prog-card--clickable');
-        card.href = link.href;
-        if (imgUrl) {
-          var wrap = make('div', 'prog-card-img');
-          var img = document.createElement('img');
-          img.src = imgUrl; img.alt = title; img.loading = 'lazy';
-          wrap.appendChild(img); card.appendChild(wrap);
-        }
-        var body = make('div', 'prog-card-body');
-        var labels = (e.category || []).slice(0, 2).map(function (c) { return c.term; });
-        body.appendChild(make('div', 'prog-card-tag', labels.length ? labels.join(' \u00b7 ') : 'Update'));
-        body.appendChild(make('h3', 'prog-title', title));
-        if (text) { var p = make('p', 'body-sm', text); p.style.marginBottom = '16px'; body.appendChild(p); }
-        var more = make('span', 'prog-read-more');
-        more.innerHTML = '<span>Read Full Report</span> ' + ARROW;
-        body.appendChild(more);
-        card.appendChild(body);
-
-        if (window.attachCardTilt) window.attachCardTilt(card);   /* same hover tilt as the others */
-        card.classList.add('reveal-init');                         /* same fade-in as the others */
-        requestAnimationFrame(function () { card.classList.add('is-visible'); });
-        frag.appendChild(card);
-      });
-
-      grid.insertBefore(frag, grid.firstChild);   /* newest posts first */
-    })
-    .catch(function () { /* feed unavailable: the hand-written cards still show */ });
-})();
 
 /* ── Post pages: first photo becomes the hero image; reading-progress bar ── */
 (function () {
