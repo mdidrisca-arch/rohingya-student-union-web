@@ -753,6 +753,44 @@ var progData = [
       }
     ]
   }
+    {
+    tag: 'Education Project',
+    title: 'Education Support Program: Bridging the Gap in Education for Every Child',
+    img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3bOkwOXWJK4D5-j5-iwUEydjsYMEsxYIarUZB2v0T18CkEEBiX5rJxb1GTECHXfZqY4BON8hkgyRYCfvA3ihjYVBo0axqXuHF7bm7xKYrOISHH0R40ntRu6f0crCELrm_Pf4UID99gnjCQPCSR7lfLdubyivVfilh_RVhDrwQU4hLZYaz9HclDf67-xU/s320/2.jpg',
+    meta: [
+      { label: 'Program', val: 'Education Support Program' },
+      { label: 'Children Supported', val: '90 Rohingya children' },
+      { label: 'Learning Centers', val: '6 community-based learning centers' },
+      { label: "Girls' Enrollment", val: '68%' },
+      { label: 'Average Attendance', val: '99%' },
+      { label: 'Location', val: "Cox's Bazar, Bangladesh" },
+      { label: 'Organized by', val: 'Rohingya Student Union (RSU)' }
+    ],
+    sections: [
+      {
+        heading: 'Overview',
+        type: 'prose',
+        content: "The Rohingya Student Union (RSU) completed its six-month Education Support Program in Cox's Bazar, Bangladesh, supporting 90 Rohingya children through six community-based learning centers. The program strengthened access to inclusive education through learning materials, teacher training, and safer learning environments."
+      },
+      {
+        heading: 'Program Highlights',
+        type: 'list',
+        content: [
+          'Supported 90 Rohingya children through six community-based learning centers',
+          "Achieved 68% girls' enrollment",
+          'Recorded 99% average attendance',
+          'Provided learning materials to support children’s education',
+          'Strengthened teaching through teacher training',
+          'Promoted safer and more inclusive learning environments'
+        ]
+      },
+      {
+        heading: 'Impact',
+        type: 'prose',
+        content: "The six-month program helped strengthen educational access for Rohingya children, with a focus on participation, attendance, and supportive community-based learning environments."
+      }
+    ]
+  },
 ];
 function escAttr(s) {
 
