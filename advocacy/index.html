@@ -139,8 +139,21 @@
 
       <!-- Program Cards Grid -->
       <div class='programs-full-grid' id='programsGrid'>
+        <!-- SAVED COPY of the cards. When the page loads, these are replaced by the cards listed in
+             assets/advocacy-updates.js (edit that file, not this HTML). This copy only stays on screen if
+             JavaScript is off or that file cannot be loaded; it does not need updating when you add cards. -->
+        <div class='prog-card prog-card--clickable' onclick='openProgModal(8)'>
+          <div class='prog-card-img'>
+            <img alt='Final-Term Teacher Development Workshop' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhAGLZGFVByccpExAcJcnDReU_P9YqsWuLHGHEG5P5jcp9u-r3LU4FW6S-geYFVIFQ8iCuZl59tn8teuFPcSaWOl7RtY1GpwxTjBAnhDjfRYfCBFy4UqjIX83TvfYoY35-6BtPJ0ZTYt96pvFlctY1I-qxFHEUHtaTNF8-v5ddBhz9G9BR9vRdafGEr-jI/s2048/758964303_1342166541432749_7409638839888242136_n.jpg' decoding='async' loading='lazy'/>
+          </div>
+          <div class='prog-card-body'>
+            <div class='prog-card-tag'>Education Project</div>
+            <h3 class='prog-title'>Final-Term Teacher Development Workshop</h3>
+            <p class='body-sm' style='margin-bottom:16px;'>Teachers came together for the final-term workshop of the Literacy for Rohingya Girls program to review students’ progress, identify learning gaps, and strengthen teaching strategies for more effective learning.</p>
+            <a class='prog-read-more' href='/advocacy/#report-8'><span>Read Full Report</span> <svg fill='none' height='14' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' viewBox='0 0 24 24' width='14'><path d='M5 12h14M12 5l7 7-7 7'/></svg></a>
+          </div>
+        </div>
 
-        <!-- Card 01 -->
         <div class='prog-card prog-card--clickable' onclick='openProgModal(0)'>
           <div class='prog-card-img'>
             <img alt='Train-the-Teacher Workshop' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikN4QQUukk60Ojc_ozNhwPnDIWroVi_W4FEFRhhqgwEUzNo1-VrbbS1wvcUA86lFelmoQho_HquCCxiWkFGssDLXg-XQAaQngB8EdqGwYSPYMN49yyoDB7myRtg23eERtN5NeV1fgQDDuP4RrQZA09NxrcesV0lEqgwy6cavJjW9XejBNSTcE-wEuCVOs/s2048/643414370_1221653586817379_6580813680708586534_n.jpg' decoding='async' loading='lazy'/>
@@ -153,7 +166,6 @@
           </div>
         </div>
 
-        <!-- Card 02 -->
         <div class='prog-card prog-card--clickable' onclick='openProgModal(1)'>
           <div class='prog-card-img'>
             <img alt='Human Rights Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0Yiyk60GG9YsKkeJgqOB7W45cZF4Yf1OJJH-1z5AJtrWU_8r0pEbEYe7uCY926r7yjZrZkLrNEny2mouxeOsHRXqgLR1wbcgJX31hwBnB_IXJ7YJrhx6kJyf6Fs6mTm3fg3ixMoXBBIkXwTADhI-nJbjlWX8CrhDdMWiN1zXlSHQuWxy-gobY2giy2yU/s2048/484043856_950005650648842_1146111830082606848_n.jpg' decoding='async' loading='lazy'/>
@@ -166,7 +178,6 @@
           </div>
         </div>
 
-        <!-- Card 03 -->
         <div class='prog-card prog-card--clickable' onclick='openProgModal(2)'>
           <div class='prog-card-img'>
             <img alt='Photojournalism Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYvFQLRFbTgM6cyVP8SawfOHWAFoEgnGLeGL9lO1OiO373a8gPrv11rSzGS51QSdmNKTEFnhEnxwGEAnF7m8ahik10cRNTdx0nhGGqzYV4SVFtdnadHmhUZ9h-hpKD16kWOybFskx_4SxltWxLiaZb3aeRz1yKFfn5kcU6Zy00QfzwDsKuFIn9VpQMX-4/s2048/480612699_950627720586635_4699305135200217118_n.jpg' decoding='async' loading='lazy'/>
@@ -179,7 +190,6 @@
           </div>
         </div>
 
-        <!-- Card 04 -->
         <div class='prog-card prog-card--clickable' onclick='openProgModal(3)'>
           <div class='prog-card-img'>
             <img alt='Research Methodology Training' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4MUU7xDmz24-FEzg97ZOgMHEynTaRkQyXy4BCTWSUe6H452iFkn5YCXQdyxhMl1C2vkSg71bMRWZNePDSh30yWtWhMJ-ZXjkC1Qu6MhxnTOSjR5ZY2aHZK_DrQnS46iQCu6YDyhSVkRM9vFGUw-sUUbfn_hp518Jy5oMUvU65e2aNy-bbPIL7xL8Q5cM/s320/482033142_950616090587798_5192982234632189680_n.jpg' decoding='async' loading='lazy'/>
@@ -239,7 +249,6 @@
             <a class='prog-read-more' href='/advocacy/#report-7'><span>Read Full Report</span> <svg fill='none' height='14' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' viewBox='0 0 24 24' width='14'><path d='M5 12h14M12 5l7 7-7 7'/></svg></a>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -249,8 +258,10 @@
       <div class='section-header--center section-header' style='margin-bottom:48px;'>
         <h2 class='display-lg'>Our Recents</h2>
       </div>
-      <div class='programs-full-grid' id='updatesGrid'>
-
+      <div class='programs-full-grid' id='recentsGrid'>
+        <!-- SAVED COPY of the cards. When the page loads, these are replaced by the cards listed in
+             assets/recents-updates.js (edit that file, not this HTML). This copy only stays on screen if
+             JavaScript is off or that file cannot be loaded; it does not need updating when you add cards. -->
         <a class='prog-card prog-card--clickable' href='https://www.facebook.com/share/p/1D8hCw6ZPy/' rel='noopener noreferrer' target='_blank'>
           <div class='prog-card-img'>
             <img alt='Education That Transforms Lives' src='https://blogger.googleusercontent.com/img/a/AVvXsEg3cM-SKzTfTsrEmrSlrwHe_tOEGB1mcFGjTUezVUgnGaS7YPZuMXovl2V9UJ_93oSdNIIOmy5sIfGVATbTscrdeK9Xh86IudS3f22YsqQY_s9kBWvQxRYP-QaTnyijWkSYIQDx2YvBMrrP0cC-udeiuUZLQLBGsd93x451vAHCbVYYmO-tv7-75nDH-5I' decoding='async' loading='lazy'/>
@@ -298,7 +309,6 @@
             <span class='prog-read-more'><span>View Post</span> <svg fill='none' height='14' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' viewBox='0 0 24 24' width='14'><path d='M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6'/><path d='M15 3h6v6'/><path d='M10 14L21 3'/></svg></span>
           </div>
         </a>
-
       </div>
     </div>
   </section>
@@ -353,7 +363,8 @@
   </div>
 </footer>
 
-<script defer='defer' src='/assets/advocacy-updates.js'></script>
-<script defer='defer' src='/assets/site.js?v=b8910e8aa8'></script>
+<script defer='defer' src='/assets/advocacy-updates.js?v=c061af36a2'></script>
+<script defer='defer' src='/assets/recents-updates.js?v=c061af36a2'></script>
+<script defer='defer' src='/assets/site.js?v=c061af36a2'></script>
 </body>
 </html>
