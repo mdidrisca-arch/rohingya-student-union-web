@@ -756,7 +756,7 @@ var progData = [
 {
   tag: 'Education Support Program',
   title: 'Bridging the Gap in Education for Every Child',
-  img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMDfv9pVzALHGS_oN1VLNMzMK7bnNud-dPW_3QoOjUrGbQ5D2bA_C2yu3oisojxrY_NLITGJuWX9OSfp4cD8qEyR02iomIniMJk3VJmB5sBPvEJ7SgZ8ci99GGI09JCIjH8MduA_-WbiY0h5I2CJLVnYXTEy7pJ3dqoETLXqUP19Kp6S1pySsoknjj9L0/s320/Bridging%20the%20Gap%20in%20Education.png',
+  img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMDfv9pVzALHGS_oN1VLNMzMK7bnNud-dPW_3QoOjUrGbQ5D2bA_C2yu3oisojxrY_NLITGJuWX9OSfp4cD8qEyR02iomIniMJk3VJmB5sBPvEJ7SgZ8ci99GGI09JCIjH8MduA_-WbiY0h5I2CJLVnYXTEy7pJ3dqoETLXqUP19Kp6S1pySsoknjj9L0/s1600/Bridging%20the%20Gap%20in%20Education.png',
   meta: [
     { label: 'Program', val: 'Education Support Program' },
     { label: 'Location', val: "Cox's Bazar Camps, Bangladesh" },
