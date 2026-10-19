@@ -766,7 +766,7 @@ var progData = [
         heading: 'Overview',
         type: 'prose',
         content: "The Rohingya Student Union (RSU) implemented a six-month Education Support Program in Rohingya refugee camps in Cox’s Bazar, Bangladesh, to expand access to quality education for children who face barriers to learning, particularly girls. Through community-based learning centers, local teacher recruitment, educational materials, and community engagement, the program worked to create safe, inclusive, and supportive learning opportunities for Rohingya children.
-
+],
 Key Achievements"
       },
       {
