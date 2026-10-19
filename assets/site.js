@@ -753,23 +753,21 @@ var progData = [
     ]
   },
     {
-    tag: 'Education Project For Every Child',
-    title: 'Education Support Program: Bridging the Gap in Education for Every Child',
-    img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3bOkwOXWJK4D5-j5-iwUEydjsYMEsxYIarUZB2v0T18CkEEBiX5rJxb1GTECHXfZqY4BON8hkgyRYCfvA3ihjYVBo0axqXuHF7bm7xKYrOISHH0R40ntRu6f0crCELrm_Pf4UID99gnjCQPCSR7lfLdubyivVfilh_RVhDrwQU4hLZYaz9HclDf67-xU/s320/2.jpg',
+    tag: 'Education Support Program',
+    title: 'Bridging the Gap in Education for Every Child',
+    img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMDfv9pVzALHGS_oN1VLNMzMK7bnNud-dPW_3QoOjUrGbQ5D2bA_C2yu3oisojxrY_NLITGJuWX9OSfp4cD8qEyR02iomIniMJk3VJmB5sBPvEJ7SgZ8ci99GGI09JCIjH8MduA_-WbiY0h5I2CJLVnYXTEy7pJ3dqoETLXqUP19Kp6S1pySsoknjj9L0/s320/Bridging%20the%20Gap%20in%20Education.png',
     meta: [
       { label: 'Program', val: 'Education Support Program' },
-      { label: 'Children Supported', val: '90 Rohingya children' },
-      { label: 'Learning Centers', val: '6 community-based learning centers' },
-      { label: "Girls' Enrollment", val: '68%' },
-      { label: 'Average Attendance', val: '99%' },
-      { label: 'Location', val: "Cox's Bazar, Bangladesh" },
+      { label: 'Location', val: "Cox's Bazar Camps, Bangladesh" },
       { label: 'Organized by', val: 'Rohingya Student Union (RSU)' }
     ],
     sections: [
       {
         heading: 'Overview',
         type: 'prose',
-        content: "The Rohingya Student Union (RSU) completed its six-month Education Support Program in Cox's Bazar, Bangladesh, supporting 90 Rohingya children through six community-based learning centers. The program strengthened access to inclusive education through learning materials, teacher training, and safer learning environments."
+        content: "The Rohingya Student Union (RSU) implemented a six-month Education Support Program in Rohingya refugee camps in Cox’s Bazar, Bangladesh, to expand access to quality education for children who face barriers to learning, particularly girls. Through community-based learning centers, local teacher recruitment, educational materials, and community engagement, the program worked to create safe, inclusive, and supportive learning opportunities for Rohingya children.
+
+Key Achievements"
       },
       {
         heading: 'Program Highlights',
@@ -777,11 +775,29 @@ var progData = [
         content: [
           'Supported 90 Rohingya children through six community-based learning centers',
           "Achieved 68% girls' enrollment",
-          'Recorded 99% average attendance',
+          "6 local teachers recruited, including four women."
+          '99% average attendance recorded across the learning centers.',
           'Provided learning materials to support children’s education',
+          '97% of students reported to have developed the ability to read and write simple sentences in Burmese and English by the end of the project.'
+          '400–500 community members estimated to have benefited indirectly through awareness, engagement, and improved community support for education.'
           'Strengthened teaching through teacher training',
           'Promoted safer and more inclusive learning environments'
         ]
+      },
+      {
+        heading: 'Creating Opportunities Through Education',
+        type: 'prose',
+        content: "The program established learning centers in five target camps to bring educational opportunities closer to children and their families. Students received essential learning materials, including school bags, textbooks, exercise books, stationery, and other classroom supplies. Refreshments were provided on class days to encourage participation and regular attendance. \n\n RSU also recruited and trained local teachers, with a strong emphasis on female educators, child safeguarding, inclusive teaching practices, and gender-responsive education. Regular monitoring visits and engagement with parents and community leaders helped strengthen trust and maintain learning quality."
+      },
+      {
+        heading: 'Empowering Girls and Strengthening Communities',
+        type: 'prose',
+        content: "Girls’ education remained at the heart of the initiative. By establishing accessible learning spaces and recruiting female teachers, RSU helped address some of the safety, distance, and social barriers that prevent Rohingya girls from accessing education.  \n\n  Community discussions, parent meetings, and engagement with Majhis, Imams, and other community members helped promote greater acceptance of girls’ education and encouraged families to support their children’s learning."
+      },
+      {
+        heading: 'Transforming Young Lives',
+        type: 'prose',
+        content: "Behind every achievement is a child with renewed confidence and hope. During the program, students who previously had limited access to education developed foundational reading, writing, and mathematics skills. Some began helping younger siblings with their schoolwork, while others expressed ambitions of becoming teachers, nurses, doctors, and humanitarian workers.\n\n Their journeys demonstrate how accessible, community-led education can help children recognize their potential and imagine a brighter future.
       },
       {
         heading: 'Impact',
