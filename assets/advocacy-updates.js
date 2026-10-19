@@ -46,6 +46,15 @@ var advocacyUpdates = [
 
   /* ↓↓↓  ADD NEW CARDS HERE (newest first)  ↓↓↓ */
 
+   {
+  report: 9,
+  tag: "Education Project",
+  title: "Education Support Program: Bridging the Gap in Education for Every Child",
+  description: "The Rohingya Student Union (RSU) completed its six-month Education Support Program in Cox’s Bazar, Bangladesh, supporting 90 Rohingya children through six community-based learning centers. With 68% girls’ enrollment and 99% average attendance, the program strengthened access to inclusive education through learning materials, teacher training, and safer learning environments.",
+  image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3bOkwOXWJK4D5-j5-iwUEydjsYMEsxYIarUZB2v0T18CkEEBiX5rJxb1GTECHXfZqY4BON8hkgyRYCfvA3ihjYVBo0axqXuHF7bm7xKYrOISHH0R40ntRu6f0crCELrm_Pf4UID99gnjCQPCSR7lfLdubyivVfilh_RVhDrwQU4hLZYaz9HclDf67-xU/s320/2.jpg",
+  imageAlt: "A Classroom inside a shelter."
+},
+
   {
     report: 8,
     tag: "Education Project",
