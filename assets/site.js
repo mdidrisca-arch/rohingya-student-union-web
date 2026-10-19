@@ -749,12 +749,11 @@ var progData = [
       {
         heading: 'Moving Forward',
         type: 'prose',
-        content: 'Together, the teachers renewed their commitment to helping every child receive quality education and achieve the program’s learning goals.'
-      }
+        content: 'Together, the teachers renewed their commitment to helping every child receive quality education and achieve the program’s learning goals.' }
     ]
-  }
+  },
     {
-    tag: 'Education Project',
+    tag: 'Education Project For Every Child',
     title: 'Education Support Program: Bridging the Gap in Education for Every Child',
     img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3bOkwOXWJK4D5-j5-iwUEydjsYMEsxYIarUZB2v0T18CkEEBiX5rJxb1GTECHXfZqY4BON8hkgyRYCfvA3ihjYVBo0axqXuHF7bm7xKYrOISHH0R40ntRu6f0crCELrm_Pf4UID99gnjCQPCSR7lfLdubyivVfilh_RVhDrwQU4hLZYaz9HclDf67-xU/s320/2.jpg',
     meta: [
