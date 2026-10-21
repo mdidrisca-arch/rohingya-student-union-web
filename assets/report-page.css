@@ -1,0 +1,40 @@
+/* Styles for the report pages (advocacy/reports/...). Loaded only by those pages.
+   The report itself uses the site's existing report styles (.pp-hero, .pp-meta, .pp-section ...) from site.css;
+   this file only adds what a normal page needs instead of the full-screen dialog: spacing under the fixed
+   navigation bar, a skip link, paragraph spacing and the share buttons. */
+
+.skip-link {
+  position: absolute; left: 12px; top: -64px; z-index: 4000;
+  background: var(--green-800, #14532d); color: #fff; padding: 12px 18px; border-radius: 8px;
+  font: 600 14px/1.2 var(--font-body, 'DM Sans', system-ui, sans-serif); text-decoration: none;
+  transition: top .15s ease;
+}
+.skip-link:focus { top: 12px; outline: 3px solid var(--gold, #c9a227); outline-offset: 2px; }
+
+.rp-page { padding-top: 72px; }
+#main:focus { outline: none; }                 /* the skip link moves focus here; no ring around the whole page */                 /* clears the fixed navigation bar (72px) */
+.rp-topbar { position: static; }                /* the dialog's bar is sticky; on a page it just sits at the top */
+a.pp-back { text-decoration: none; white-space: nowrap; }
+
+.pp-prose + .pp-prose { margin-top: 1.15em; }   /* separate paragraphs of the same section */
+
+.rp-share { margin-top: 64px; padding-top: 32px; border-top: 2px solid var(--green-100, #dcfce7); }
+.rp-share-title {
+  font-family: var(--font-display, 'DM Serif Display', Georgia, serif);
+  font-size: 22px; font-weight: 400; color: var(--green-800, #14532d); margin: 0 0 16px;
+}
+.rp-share-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.rp-btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px;
+  border: 1px solid var(--green-200, #bbf7d0); border-radius: 999px; background: var(--warm-white, #fdfcf9);
+  color: var(--green-800, #14532d); font: 600 14px/1 var(--font-body, 'DM Sans', system-ui, sans-serif);
+  text-decoration: none; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.rp-btn:hover { background: var(--green-50, #f0fdf4); border-color: var(--green-500, #22c55e); }
+.rp-btn:focus-visible { outline: 3px solid var(--gold, #c9a227); outline-offset: 2px; }
+.rp-share [hidden] { display: none !important; }
+.rp-share-status { min-height: 1.5em; margin: 12px 0 0; font-size: 14px; color: var(--green-700, #15803d); }
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link, .rp-btn { transition: none; }
+}
