@@ -2424,3 +2424,95 @@ a.prog-card { text-decoration: none; color: inherit; }
 }
 a.prog-read-more { text-decoration: none; }
 a.nav-logo { color: inherit; }   /* the logo is now a link: keep the text colour it had as a <div> */
+
+/* ═══ EDITORIAL CARDS: Advocacy page ═══
+   Refined look for the card grids on /advocacy/ ("Our Advocacy" and "Our Recents"): hairline border, softer
+   radius, a gold rule before the label, larger serif titles.
+   Only "Our Advocacy" (#programsGrid) gets the 3:2 pictures, the wide first card, the whole-card link and the
+   Share button; "Our Recents" keeps its pictures, content and links exactly as they were.
+   Every rule is scoped to .programs-full-grid, so no other page is affected. */
+.programs-full-grid .prog-card {
+  position: relative;
+  border-radius: 12px;
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.programs-full-grid .prog-card-body { padding: 28px 32px 30px; }
+.programs-full-grid .prog-card-tag {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--green-700);
+}
+.programs-full-grid .prog-card-tag::before {
+  content: ''; flex: 0 0 22px; height: 2px; background: var(--gold);
+}
+.programs-full-grid .prog-title {
+  font-size: 26px; line-height: 1.2; letter-spacing: -0.005em; margin-bottom: 14px;
+}
+
+/* ---- Our Advocacy: pictures ---- */
+#programsGrid .prog-card-img { height: auto; aspect-ratio: 3 / 2; }
+
+/* ---- Our Advocacy: the card is one link (the title); its invisible layer covers the whole card ---- */
+#programsGrid .prog-title-link { color: inherit; text-decoration: none; }
+#programsGrid .prog-title-link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+#programsGrid .prog-title-link:focus-visible { outline: none; }
+#programsGrid .prog-card:has(.prog-title-link:focus-visible) { outline: 3px solid var(--gold); outline-offset: 3px; }
+@supports not selector(:has(*)) {
+  #programsGrid .prog-title-link:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+}
+#programsGrid .prog-card--report:hover .prog-title-link { color: var(--green-700); }
+
+/* ---- Our Advocacy: footer row with the arrow and the Share button ---- */
+#programsGrid .prog-card-foot {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-top: auto;
+}
+#programsGrid .prog-card-foot .prog-read-more { margin-top: 0; }
+.prog-share {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0; border-radius: 999px;
+  border: 1px solid var(--border-md); background: var(--warm-white); color: var(--green-700);
+  cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.prog-share:hover, .prog-share[aria-expanded='true'] { background: var(--green-50); border-color: var(--green-500); color: var(--green-800); }
+.prog-share:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.prog-share-panel {
+  position: relative; z-index: 2;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
+}
+.prog-share-panel[hidden] { display: none; }
+.prog-share-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.prog-share-item {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 16px; border-radius: 999px;
+  border: 1px solid var(--green-200); background: var(--warm-white); color: var(--green-800);
+  font: 600 13px/1 var(--font-body); text-decoration: none; cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+.prog-share-item:hover { background: var(--green-50); border-color: var(--green-500); }
+.prog-share-item:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.prog-share-status { min-height: 1.4em; margin: 10px 0 0; font-size: 13px; color: var(--green-700); }
+
+/* ---- Wide screens: the first card spans both columns (picture left, text right) ---- */
+@media (min-width: 1101px) {
+  #programsGrid > .prog-card:first-child { grid-column: 1 / -1; flex-direction: row; }
+  #programsGrid > .prog-card:first-child .prog-card-img { flex: 0 0 52%; width: 52%; aspect-ratio: auto; min-height: 400px; }
+  #programsGrid > .prog-card:first-child .prog-card-body { flex: 1; justify-content: center; padding: 44px 48px; }
+  #programsGrid > .prog-card:first-child .prog-title { font-size: 34px; }
+  #programsGrid > .prog-card:first-child .prog-card-foot { margin-top: 12px; }
+}
+/* ---- Tablets: one column, each card picture-left / text-right ---- */
+@media (min-width: 640px) and (max-width: 1100px) {
+  #programsGrid .prog-card--clickable { flex-direction: row; }
+  #programsGrid .prog-card-img { flex: 0 0 42%; width: 42%; aspect-ratio: auto; min-height: 280px; }
+  #programsGrid .prog-card-body { flex: 1; }
+}
+/* ---- Phones ---- */
+@media (max-width: 480px) {
+  .programs-full-grid .prog-card-body { padding: 24px 22px 26px; }
+  .programs-full-grid .prog-title { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prog-share, .prog-share-item { transition: none; }
+}
