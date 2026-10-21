@@ -2467,7 +2467,12 @@ a.nav-logo { color: inherit; }   /* the logo is now a link: keep the text colour
   position: relative; z-index: 2;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   margin-top: auto;
+  /* The "Read Full Report" text is only the visual end of the title link, so clicks on this row pass through
+     to the card link underneath; only the Share button takes its own clicks. */
+  pointer-events: none;
 }
+#programsGrid .prog-card-foot .prog-share,
+#programsGrid .prog-share-panel { pointer-events: auto; }
 #programsGrid .prog-card-foot .prog-read-more { margin-top: 0; }
 .prog-share {
   display: inline-flex; align-items: center; justify-content: center;
@@ -2497,10 +2502,17 @@ a.nav-logo { color: inherit; }   /* the logo is now a link: keep the text colour
 /* ---- Wide screens: the first card spans both columns (picture left, text right) ---- */
 @media (min-width: 1101px) {
   #programsGrid > .prog-card:first-child { grid-column: 1 / -1; flex-direction: row; }
-  #programsGrid > .prog-card:first-child .prog-card-img { flex: 0 0 52%; width: 52%; aspect-ratio: auto; min-height: 400px; }
-  #programsGrid > .prog-card:first-child .prog-card-body { flex: 1; justify-content: center; padding: 44px 48px; }
-  #programsGrid > .prog-card:first-child .prog-title { font-size: 34px; }
+  /* Landscape 4:3 picture, capped in height; the tall photo is cropped (object-fit: cover) toward its upper part. */
+  #programsGrid > .prog-card:first-child .prog-card-img { flex: 0 0 48%; width: 48%; aspect-ratio: 4 / 3; min-height: 0; max-height: 440px; }
+  #programsGrid > .prog-card:first-child .prog-card-img img { object-fit: cover; object-position: 50% 30%; }
+  #programsGrid > .prog-card:first-child .prog-card-body { flex: 1; justify-content: center; padding: 36px 44px; }
+  #programsGrid > .prog-card:first-child .prog-title { font-size: 30px; }
   #programsGrid > .prog-card:first-child .prog-card-foot { margin-top: 12px; }
+}
+/* Narrower desktops: a little less padding and a slightly smaller title keep the picture a true 4:3 */
+@media (min-width: 1101px) and (max-width: 1279px) {
+  #programsGrid > .prog-card:first-child .prog-card-body { padding: 24px 32px; }
+  #programsGrid > .prog-card:first-child .prog-title { font-size: 26px; margin-bottom: 10px; }
 }
 /* ---- Tablets: one column, each card picture-left / text-right ---- */
 @media (min-width: 640px) and (max-width: 1100px) {
