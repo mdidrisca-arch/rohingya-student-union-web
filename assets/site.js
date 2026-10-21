@@ -209,15 +209,72 @@ document.addEventListener('keydown', function(e) {
     return l ? 'link:' + l : '';
   }
 
+  /* ── Report pages and sharing ─────────────────────────────────────────────────────────────
+     Every report has its own page at /advocacy/reports/<slug>/ (slugs are listed in assets/report-extras.js).
+     A report card links there. If a report has no slug (or report-extras.js did not load), the card falls
+     back to the previous behaviour: it opens the report in the pop-up (/advocacy/#report-N) and has no
+     Share button. */
+  function reportPage(n) {
+    var all = window.reportExtras, x = all ? all[n] : null;
+    return (x && typeof x.slug === 'string' && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(x.slug)) ? x : null;
+  }
+  /* Address used for sharing: this site's own address, except that rostudentunion.org and
+     www.rostudentunion.org always share the one official address, https://rostudentunion.org */
+  function siteBase() {
+    if (/^(www\.)?rostudentunion\.org$/i.test(location.hostname)) return 'https://rostudentunion.org';
+    return (location.origin && location.origin !== 'null') ? location.origin : 'https://rostudentunion.org';
+  }
+  var SHARE_ICON = '<svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+
+  function buildShare(n, page, card) {
+    var url = siteBase() + '/advocacy/reports/' + page.slug + '/';
+    var t = text(page.title);
+    var button = make('button', 'prog-share');
+    button.type = 'button';
+    button.setAttribute('aria-label', 'Share: ' + t);
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', 'share-panel-' + n);
+    button.setAttribute('data-share-url', url);
+    button.setAttribute('data-share-title', t);
+    button.innerHTML = SHARE_ICON;
+
+    var panel = make('div', 'prog-share-panel');
+    panel.id = 'share-panel-' + n;
+    panel.hidden = true;
+    var list = make('ul', 'prog-share-list');
+    [
+      ['Facebook', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url)],
+      ['WhatsApp', 'https://wa.me/?text=' + encodeURIComponent(t + ' ' + url)],
+      ['LinkedIn', 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url)],
+      ['X', 'https://x.com/intent/post?text=' + encodeURIComponent(t) + '&url=' + encodeURIComponent(url)]
+    ].forEach(function (item) {
+      var li = make('li'), a = make('a', 'prog-share-item', item[0]);
+      a.href = item[1]; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.setAttribute('aria-label', 'Share on ' + item[0] + ' (opens in a new tab)');
+      li.appendChild(a); list.appendChild(li);
+    });
+    var cli = make('li'), copy = make('button', 'prog-share-item', 'Copy link');
+    copy.type = 'button'; copy.setAttribute('data-share-copy', url);
+    cli.appendChild(copy); list.appendChild(cli);
+    panel.appendChild(list);
+    var status = make('p', 'prog-share-status');
+    status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
+    panel.appendChild(status);
+    return { button: button, panel: panel };
+  }
+
   function buildCard(u, opt) {
     var n = reportNo(u), rep = n >= 0;
+    var page = rep ? reportPage(n) : null;               /* null for link cards and for a report with no page */
     var title = text(u.title);
     if (!title) throw new Error('an entry has no title');
-    var link = rep ? '/advocacy/#report-' + n : safeUrl(u.link);
+    var link = rep ? (page ? '/advocacy/reports/' + page.slug + '/' : '/advocacy/#report-' + n) : safeUrl(u.link);
     var external = !rep && /^https?:/i.test(link);
 
     var card;
-    if (rep) {
+    if (page) {
+      card = make('div', 'prog-card prog-card--clickable prog-card--report');
+    } else if (rep) {
       card = make('div', 'prog-card prog-card--clickable');
       card.setAttribute('onclick', 'openProgModal(' + n + ')');
     } else if (link) {
@@ -241,9 +298,17 @@ document.addEventListener('keydown', function(e) {
     }
 
     var body = make('div', 'prog-card-body');
-    var label = [text(u.tag), text(u.date)].filter(Boolean).join(' \u00b7 ');
+    var label = [text(u.tag), text(u.date)].filter(Boolean).join(' · ');
     body.appendChild(make('div', 'prog-card-tag', label || 'Update'));
-    body.appendChild(make('h3', 'prog-title', title));
+    if (page) {
+      var h = make('h3', 'prog-title'), tl = make('a', 'prog-title-link', title);
+      tl.href = link;
+      tl.setAttribute('aria-label', title + ', ' + (label || 'Update'));   /* the three "Disaster Risk Management" cards differ by their label */
+      h.appendChild(tl);
+      body.appendChild(h);
+    } else {
+      body.appendChild(make('h3', 'prog-title', title));
+    }
     /* Description: "\n\n" typed inside the quotes starts a new paragraph. */
     text(u.description).split(/\n+/).forEach(function (para) {
       para = para.trim();
@@ -252,7 +317,18 @@ document.addEventListener('keydown', function(e) {
       p.style.marginBottom = '16px';
       body.appendChild(p);
     });
-    if (link) {
+    if (page) {
+      var foot = make('div', 'prog-card-foot');
+      var go = make('span', 'prog-read-more');            /* the title link is the real link; this is its visual arrow */
+      go.setAttribute('aria-hidden', 'true');
+      go.appendChild(make('span', '', text(u.linkLabel) || opt.defaultLabel));
+      go.insertAdjacentHTML('beforeend', ' ' + ARROW_ICON);
+      foot.appendChild(go);
+      var share = buildShare(n, page, card);
+      foot.appendChild(share.button);
+      body.appendChild(foot);
+      body.appendChild(share.panel);
+    } else if (link) {
       var more = make(rep ? 'a' : 'span', 'prog-read-more');
       if (rep) more.href = link;
       more.appendChild(make('span', '', text(u.linkLabel) || opt.defaultLabel));
@@ -262,6 +338,66 @@ document.addEventListener('keydown', function(e) {
     card.appendChild(body);
     return card;
   }
+
+  /* Share button behaviour (one set of listeners for every card).
+     - Where the browser can share natively (phones, and some desktop browsers) the button opens the device's own share sheet.
+     - Otherwise it opens a small panel inside the card: Facebook, WhatsApp, LinkedIn, X and Copy link.
+     Escape, a click elsewhere, or choosing an option closes the panel. */
+  var openShare = null;
+  function setShare(button, open) {
+    var panel = document.getElementById(button.getAttribute('aria-controls'));
+    if (!panel) return;
+    panel.hidden = !open;
+    button.setAttribute('aria-expanded', open ? 'true' : 'false');
+    openShare = open ? button : null;
+    if (!open) { var st = panel.querySelector('.prog-share-status'); if (st) st.textContent = ''; }
+  }
+  function copyText(value) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(value);
+    return new Promise(function (resolve, reject) {
+      try {
+        var box = document.createElement('textarea');
+        box.value = value; box.setAttribute('readonly', '');
+        box.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+        document.body.appendChild(box); box.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(box);
+        if (ok) resolve(); else reject(new Error('copy failed'));
+      } catch (err) { reject(err); }
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target : null;
+    if (!t) return;
+    var btn = t.closest('.prog-share');
+    if (btn) {
+      var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+      if (openShare && openShare !== btn) setShare(openShare, false);
+      if (wasOpen) { setShare(btn, false); return; }
+      if (typeof navigator.share === 'function') {
+        navigator.share({ title: btn.getAttribute('data-share-title'), url: btn.getAttribute('data-share-url') })
+          .catch(function (err) { if (!err || err.name !== 'AbortError') setShare(btn, true); });   /* not possible here: show the panel */
+      } else {
+        setShare(btn, true);
+      }
+      return;
+    }
+    var copy = t.closest('[data-share-copy]');
+    if (copy) {
+      var status = copy.closest('.prog-share-panel').querySelector('.prog-share-status');
+      var value = copy.getAttribute('data-share-copy');
+      copyText(value).then(
+        function () { status.textContent = 'Link copied to the clipboard.'; },
+        function () { status.textContent = 'The link could not be copied automatically. It is: ' + value; }
+      );
+      return;
+    }
+    if (openShare && !t.closest('.prog-share-panel')) setShare(openShare, false);
+    else if (openShare && t.closest('.prog-share-item') && !t.closest('[data-share-copy]')) setShare(openShare, false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && openShare) { var b = openShare; setShare(b, false); b.focus(); }
+  });
 
   function renderSection(opt) {
     var grid = document.getElementById(opt.gridId);

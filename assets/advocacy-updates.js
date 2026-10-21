@@ -95,7 +95,7 @@ var advocacyUpdates = [
     tag: "Skills for Advocacy · Session 4/12",
     title: "Research Methodology",
     description: "Comprehensive training on research design, data collection, literature review, ethical considerations, and proposal writing. Trainer: M. Furquan Mirza.",
-    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4MUU7xDmz24-FEzg97ZOgMHEynTaRkQyXy4BCTWSUe6H452iFkn5YCXQdyxhMl1C2vkSg71bMRWZNePDSh30yWtWhMJ-ZXjkC1Qu6MhxnTOSjR5ZY2aHZK_DrQnS46iQCu6YDyhSVkRM9vFGUw-sUUbfn_hp518Jy5oMUvU65e2aNy-bbPIL7xL8Q5cM/s320/482033142_950616090587798_5192982234632189680_n.jpg",
+    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4MUU7xDmz24-FEzg97ZOgMHEynTaRkQyXy4BCTWSUe6H452iFkn5YCXQdyxhMl1C2vkSg71bMRWZNePDSh30yWtWhMJ-ZXjkC1Qu6MhxnTOSjR5ZY2aHZK_DrQnS46iQCu6YDyhSVkRM9vFGUw-sUUbfn_hp518Jy5oMUvU65e2aNy-bbPIL7xL8Q5cM/s2048/482033142_950616090587798_5192982234632189680_n.jpg",
     imageAlt: "Research Methodology Training"
   },
 
