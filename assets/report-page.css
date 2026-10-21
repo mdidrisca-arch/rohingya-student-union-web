@@ -59,15 +59,6 @@
   aspect-ratio: var(--rp-ar, 1.5); object-fit: cover; object-position: 50% 28%;
 }
 
-/* quiet share row under the title (the full share area is at the end of the report) */
-.rp-share--compact { margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; }
-.rp-share--compact .rp-share-label {
-  font: 700 11px/1 var(--font-mono, 'Space Mono', monospace); letter-spacing: .14em; text-transform: uppercase; color: var(--rp-label);
-}
-.rp-share--compact .rp-share-list { gap: 6px; justify-content: center; }
-.rp-share--compact .rp-btn { min-height: 36px; padding: 0 14px; font-size: 13px; }
-.rp-share--compact .rp-share-status { flex: 0 0 100%; min-height: 0; margin: 0; text-align: center; }
-
 /* portrait picture (report 9): shown whole; beside the title on wide screens, below it on tablets and phones */
 .rp-article--portrait .rp-lead img { aspect-ratio: 1086 / 1448; object-fit: contain; object-position: center; }
 .rp-article--portrait .rp-lead { max-width: 460px; margin: 40px auto 0; }
@@ -75,8 +66,6 @@
   .rp-article--portrait .rp-intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 64px; align-items: center; text-align: left; padding-top: 40px; }
   .rp-article--portrait .rp-eyebrow::after { display: none; }
   .rp-article--portrait .rp-title { margin-left: 0; max-width: 16ch; }
-  .rp-article--portrait .rp-share--compact { justify-content: flex-start; }
-  .rp-article--portrait .rp-share--compact .rp-share-status { text-align: left; }
   .rp-article--portrait .rp-lead { margin: 0; max-width: none; }
 }
 
