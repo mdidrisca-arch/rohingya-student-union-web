@@ -17,9 +17,11 @@
 
 .rp-article {
   --rp-gutter: clamp(20px, 5vw, 48px);
-  --rp-wide: 720px;                            /* ONE shared width: breadcrumb, picture, details band, text and end area all
+  --rp-wide: 1040px;                           /* ONE shared width: breadcrumb, picture, details band, text and end area all
                                                   line up on the same left and right edges */
-  --rp-read: 720px;                            /* reading column: about 75-80 characters per line */
+  --rp-read: 1040px;
+  --rp-side: clamp(200px, 24vw, 280px);        /* desktop: left column that holds each section heading */
+  --rp-gap: 48px;
   --rp-rule: rgba(26, 77, 52, 0.22);
   --rp-label: #55675c;                         /* small labels: 5.6:1 on the page colour */
   color: var(--text-body, #3D4F43);
@@ -66,11 +68,16 @@
 .rp-share--compact .rp-btn { min-height: 36px; padding: 0 14px; font-size: 13px; }
 .rp-share--compact .rp-share-status { flex: 0 0 100%; min-height: 0; margin: 0; text-align: center; }
 
-/* portrait picture (report 9): shown whole, centred on a quiet panel that spans the same width as everything else */
-.rp-article--portrait .rp-lead { background: var(--ivory-dark, #EDE8DC); border-radius: 4px; }
-.rp-article--portrait .rp-lead img {
-  width: auto; height: auto; max-width: 100%; max-height: 520px; margin: 0 auto;
-  aspect-ratio: 1086 / 1448; object-fit: contain; object-position: center; background: transparent; border-radius: 4px;
+/* portrait picture (report 9): shown whole; beside the title on wide screens, below it on tablets and phones */
+.rp-article--portrait .rp-lead img { aspect-ratio: 1086 / 1448; object-fit: contain; object-position: center; }
+.rp-article--portrait .rp-lead { max-width: 460px; margin: 40px auto 0; }
+@media (min-width: 900px) {
+  .rp-article--portrait .rp-intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 64px; align-items: center; text-align: left; padding-top: 40px; }
+  .rp-article--portrait .rp-eyebrow::after { display: none; }
+  .rp-article--portrait .rp-title { margin-left: 0; max-width: 16ch; }
+  .rp-article--portrait .rp-share--compact { justify-content: flex-start; }
+  .rp-article--portrait .rp-share--compact .rp-share-status { text-align: left; }
+  .rp-article--portrait .rp-lead { margin: 0; max-width: none; }
 }
 
 /* ---------- report details ---------- */
@@ -142,6 +149,23 @@
   font: 600 15px/1 var(--font-body, 'DM Sans', system-ui, sans-serif); color: var(--green-800, #145226); text-decoration: none;
 }
 .rp-back:hover { color: var(--green-900, #0F3D1C); text-decoration: underline; }
+
+/* ---------- desktop: headings hang in the left column; text runs to the picture's right edge ---------- */
+@media (min-width: 900px) {
+  .rp-section { display: grid; grid-template-columns: var(--rp-side) minmax(0, 1fr); column-gap: var(--rp-gap); }
+  .rp-section + .rp-section { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--rp-rule); }
+  .rp-section > .rp-h2 { grid-column: 1; margin: 0; }
+  .rp-section > .rp-h2 ~ * { grid-column: 2; }
+  .rp-section > .rp-h2 + .rp-prose, .rp-section > .rp-h2 + .rp-list { margin-top: 20px; }   /* first line level with the heading text, below its gold rule */
+  .rp-share--full, .rp-related { display: grid; grid-template-columns: var(--rp-side) minmax(0, 1fr); column-gap: var(--rp-gap); }
+  .rp-share--full > .rp-share-title, .rp-related > .rp-related-head { grid-column: 1; grid-row: 1; margin: 0; }
+  .rp-share--full > :not(.rp-share-title), .rp-related > :not(.rp-related-head) { grid-column: 2; }
+  .rp-back-wrap { padding-left: calc(var(--rp-side) + var(--rp-gap)); }
+}
+/* tablets and phones: one narrower column for everything, still on shared edges */
+@media (max-width: 899px) {
+  .rp-article { --rp-wide: 680px; --rp-read: 680px; }
+}
 
 /* ---------- phones ---------- */
 @media (max-width: 640px) {
