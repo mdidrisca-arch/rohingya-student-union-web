@@ -1,13 +1,13 @@
 /* Styles for the report pages (advocacy/reports/...). Loaded only by those pages.
    Premium editorial layout: one centred reading column, a wide lead picture, hairline rules instead of cards.
    Everything here is scoped to .rp-* classes, so no other page is affected. Brand colours and fonts come from the
-   variables in site.css (RSU green and gold; DM Serif Display for headings, DM Sans for text, Space Mono for labels). */
+   variables in site.css (RSU green and gold; Plus Jakarta Sans throughout). */
 
 /* ---------- skip link and page frame ---------- */
 .skip-link {
   position: absolute; left: 12px; top: -64px; z-index: 4000;
   background: var(--green-800, #145226); color: #fff; padding: 12px 18px; border-radius: 8px;
-  font: 600 14px/1.2 var(--font-body, 'DM Sans', system-ui, sans-serif); text-decoration: none;
+  font: 600 14px/1.2 var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif); text-decoration: none;
   transition: top .15s ease;
 }
 .skip-link:focus { top: 12px; outline: 3px solid var(--gold, #C49A2A); outline-offset: 2px; }
@@ -44,13 +44,13 @@
 .rp-intro { padding: 36px 0 0; text-align: center; }
 .rp-eyebrow {
   display: inline-flex; align-items: center; gap: 14px; margin: 0;
-  font: 700 12px/1.4 var(--font-mono, 'Space Mono', monospace); letter-spacing: .14em; text-transform: uppercase;
+  font: 700 12px/1.4 var(--font-mono, 'Plus Jakarta Sans', system-ui, sans-serif); letter-spacing: .14em; text-transform: uppercase;
   color: var(--green-700, #1A6B30); text-align: center; text-wrap: balance;
 }
 .rp-eyebrow::before, .rp-eyebrow::after { content: ''; flex: 0 0 28px; height: 2px; background: var(--gold, #C49A2A); }
 .rp-title {
   margin: 20px auto 0; max-width: 24ch;
-  font: 400 clamp(2.125rem, 1.35rem + 3.3vw, 3.625rem)/1.08 var(--font-display, 'DM Serif Display', Georgia, serif);
+  font: 800 clamp(2.125rem, 1.35rem + 3.3vw, 3.625rem)/1.08 var(--font-display, 'Plus Jakarta Sans', system-ui, sans-serif);
   letter-spacing: -0.012em; color: var(--ink, #111A15); text-wrap: balance;
 }
 .rp-lead { margin: 40px 0 0; }
@@ -77,16 +77,16 @@
 }
 .rp-fact { padding: 20px 0 22px; }
 .rp-fact dt {
-  margin: 0 0 6px; font: 700 11px/1.4 var(--font-mono, 'Space Mono', monospace); letter-spacing: .12em; text-transform: uppercase; color: var(--rp-label);
+  margin: 0 0 6px; font: 700 11px/1.4 var(--font-mono, 'Plus Jakarta Sans', system-ui, sans-serif); letter-spacing: .12em; text-transform: uppercase; color: var(--rp-label);
 }
-.rp-fact dd { margin: 0; font: 500 16px/1.45 var(--font-body, 'DM Sans', system-ui, sans-serif); color: var(--ink, #111A15); }
+.rp-fact dd { margin: 0; font: 500 16px/1.45 var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif); color: var(--ink, #111A15); }
 
 /* ---------- reading column ---------- */
 .rp-body { width: min(100% - 2 * var(--rp-gutter), var(--rp-read)); margin: 72px auto 0; }
 .rp-section + .rp-section { margin-top: 60px; }
 .rp-h2 {
   margin: 0 0 20px;
-  font: 400 clamp(1.5rem, 1.2rem + 1.1vw, 1.9rem)/1.2 var(--font-display, 'DM Serif Display', Georgia, serif);
+  font: 800 clamp(1.5rem, 1.2rem + 1.1vw, 1.9rem)/1.2 var(--font-display, 'Plus Jakarta Sans', system-ui, sans-serif);
   letter-spacing: -0.005em; color: var(--ink, #111A15); text-wrap: balance;
 }
 .rp-h2::before { content: ''; display: block; width: 32px; height: 2px; margin-bottom: 18px; background: var(--gold, #C49A2A); }
@@ -106,13 +106,13 @@
 .rp-end { width: min(100% - 2 * var(--rp-gutter), var(--rp-read)); margin: 88px auto 0; padding: 44px 0 72px; border-top: 1px solid var(--rp-rule); }
 .rp-share--full { margin: 0; }
 .rp-share-title {
-  margin: 0 0 18px; font: 400 1.625rem/1.2 var(--font-display, 'DM Serif Display', Georgia, serif); color: var(--ink, #111A15);
+  margin: 0 0 18px; font: 800 1.625rem/1.2 var(--font-display, 'Plus Jakarta Sans', system-ui, sans-serif); color: var(--ink, #111A15);
 }
 .rp-share-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
 .rp-btn {
   display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px;
   border: 1px solid var(--border-md, rgba(26,77,52,.2)); border-radius: 999px; background: transparent;
-  color: var(--green-800, #145226); font: 600 14px/1 var(--font-body, 'DM Sans', system-ui, sans-serif);
+  color: var(--green-800, #145226); font: 600 14px/1 var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif);
   text-decoration: none; cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease;
 }
 .rp-btn:hover { background: var(--green-50, #EFFAF0); border-color: var(--green-500, #2E9E44); color: var(--green-900, #0F3D1C); }
@@ -120,22 +120,22 @@
 .rp-share-status { min-height: 1.5em; margin: 12px 0 0; font-size: 14px; color: var(--green-700, #1A6B30); }
 
 .rp-related { margin-top: 56px; }
-.rp-related-head { margin: 0 0 14px; font: 400 1.375rem/1.25 var(--font-display, 'DM Serif Display', Georgia, serif); color: var(--ink, #111A15); }
+.rp-related-head { margin: 0 0 14px; font: 800 1.375rem/1.25 var(--font-display, 'Plus Jakarta Sans', system-ui, sans-serif); color: var(--ink, #111A15); }
 .rp-related-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rp-rule); }
 .rp-related-list li { border-bottom: 1px solid var(--border, rgba(26,77,52,.12)); }
 .rp-related-link {
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; padding: 18px 0; text-decoration: none; color: inherit;
 }
 .rp-related-link::after { content: '\2192' / ''; flex: 0 0 auto; order: 2; color: var(--green-700, #1A6B30); transition: transform .15s ease; }
-.rp-related-title { flex: 1 1 0; min-width: 0; font: 400 1.25rem/1.3 var(--font-display, 'DM Serif Display', Georgia, serif); color: var(--ink, #111A15); }
-.rp-related-tag { order: 3; flex: 0 0 100%; font: 700 11px/1.4 var(--font-mono, 'Space Mono', monospace); letter-spacing: .1em; text-transform: uppercase; color: var(--rp-label); }
+.rp-related-title { flex: 1 1 0; min-width: 0; font: 800 1.25rem/1.3 var(--font-display, 'Plus Jakarta Sans', system-ui, sans-serif); color: var(--ink, #111A15); }
+.rp-related-tag { order: 3; flex: 0 0 100%; font: 700 11px/1.4 var(--font-mono, 'Plus Jakarta Sans', system-ui, sans-serif); letter-spacing: .1em; text-transform: uppercase; color: var(--rp-label); }
 .rp-related-link:hover .rp-related-title { color: var(--green-700, #1A6B30); text-decoration: underline; text-underline-offset: 4px; }
 .rp-related-link:hover::after { transform: translateX(4px); }
 
 .rp-back-wrap { margin: 48px 0 0; }
 .rp-back {
   display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
-  font: 600 15px/1 var(--font-body, 'DM Sans', system-ui, sans-serif); color: var(--green-800, #145226); text-decoration: none;
+  font: 600 15px/1 var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif); color: var(--green-800, #145226); text-decoration: none;
 }
 .rp-back:hover { color: var(--green-900, #0F3D1C); text-decoration: underline; }
 
@@ -184,4 +184,15 @@
   .rp-h2, .rp-eyebrow { break-after: avoid; }
   .rp-list li, .rp-prose { break-inside: avoid; }
   .rp-end { border: 0; padding: 0; margin-top: 24px; }
+}
+
+
+/* ---------- dark mode (applied when <html data-theme="dark">; light mode above is untouched) ---------- */
+@media screen {
+html[data-theme='dark'] .rp-article { --rp-rule: rgba(255,255,255,0.2); --rp-label: #A3B5A9; }
+html[data-theme='dark'] :is(.rp-crumbs a, .rp-crumbs a:hover, .rp-eyebrow, .rp-btn, .rp-btn:hover, .rp-share-status,
+  .rp-related-link::after, .rp-related-link:hover .rp-related-title, .rp-back, .rp-back:hover) { color: #B7EBBF; }
+html[data-theme='dark'] .rp-btn:hover { background: #17291E; }
+html[data-theme='dark'] .rp-lead img { background: #15241B; }
+html[data-theme='dark'] .skip-link { background: #B7EBBF; color: #0B1510; }
 }

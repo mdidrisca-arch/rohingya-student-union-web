@@ -654,7 +654,7 @@ if ('IntersectionObserver' in window) {
 /* NOTE: reports are identified by their POSITION in this list: report N opens with #report-N, and the
    cards in assets/advocacy-updates.js refer to them as { report: N }. Add new reports at the END of this
    list (so existing numbers never change), then add a { report: N } card to advocacy-updates.js.
-   The home page "Latest" section shows the first three entries of this list. */
+   The home page "Latest" section shows the first three cards of assets/advocacy-updates.js. */
 var progData = [
   {
     tag: 'Education · Train-the-Teacher Workshop',
@@ -1042,14 +1042,14 @@ function hideProgModal() {
   });
 })();
 
-/* Latest Update (home): shows the first 3 entries of progData, the same
-   list that feeds the Advocacy page. It shows the first three entries.
-   (New reports are added at the END of progData so existing report numbers never change; see the NOTE above progData.) */
+/* Latest Update (home): shows the three newest cards of "Our Advocacy" - the first three entries of
+   assets/advocacy-updates.js, in the same order as on the Advocacy page - so editing that one file updates both places.
+   A report card opens its own report page (or the pop-up if it has none); a link card opens its web address.
+   If the data file is missing or empty, it falls back to the first three entries of progData (the previous behaviour). */
 (function() {
   var grid = document.getElementById('latestGrid');
   if (!grid || typeof progData === 'undefined') return;
   var COUNT = 3;
-  var HIDE_TITLES = [];   /* titles not shown in this section */
   var ARROW = '<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -1057,43 +1057,74 @@ function hideProgModal() {
     if (text) n.textContent = text;
     return n;
   }
-  function excerpt(d, max) {
-    var txt = '';
-    for (var i = 0; i < (d.sections || []).length; i++) {
-      if (d.sections[i].type === 'prose') { txt = d.sections[i].content; break; }
-    }
+  function cut(txt, max) {
+    txt = String(txt || '').split(/\n\s*\n/)[0].replace(/\s+/g, ' ').trim();
     if (txt.length <= max) return txt;
-    var cut = txt.slice(0, max);
-    return cut.slice(0, Math.max(cut.lastIndexOf(' '), 60)).replace(/[\s,.;:\u2014-]+$/, '') + '\u2026';
+    var c = txt.slice(0, max);
+    return c.slice(0, Math.max(c.lastIndexOf(' '), 60)).replace(/[\s,.;:\u2014-]+$/, '') + '\u2026';
   }
-  function dateOf(d) {
-    for (var i = 0; i < (d.meta || []).length; i++) {
-      if (d.meta[i].label === 'Date') return d.meta[i].val;
-    }
+  function progText(d) {
+    for (var i = 0; i < (d.sections || []).length; i++) if (d.sections[i].type === 'prose') return d.sections[i].content;
     return '';
   }
-  progData.slice(0, COUNT).forEach(function(d, i) {
+  function progDate(d) {
+    for (var i = 0; i < (d.meta || []).length; i++) if (d.meta[i].label === 'Date') return d.meta[i].val;
+    return '';
+  }
+  function slugOf(n) {
+    var x = window.reportExtras && window.reportExtras[n];
+    return (x && typeof x.slug === 'string' && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(x.slug)) ? x.slug : '';
+  }
+  /* Build the list of cards to show: {title, text, img, alt, href, external, date, label} */
+  var items = [];
+  var cards = (window.advocacyUpdates instanceof Array) ? window.advocacyUpdates : [];
+  cards.forEach(function(c) {
+    if (items.length >= COUNT || !c || typeof c !== 'object') return;
+    if (typeof c.report === 'number' || /^\d+$/.test(String(c.report == null ? '' : c.report))) {
+      var n = Number(c.report), d = progData[n];
+      if (!d) return;
+      var s = slugOf(n);
+      items.push({ title: c.title || d.title, text: c.description || progText(d), img: c.image || d.img, alt: c.imageAlt || c.title || d.title,
+        href: s ? '/advocacy/reports/' + s + '/' : '/advocacy/#report-' + n, external: false, date: c.date || progDate(d), label: c.linkLabel || 'Read Full Report' });
+    } else if (c.title) {
+      var ext = /^https?:\/\//i.test(c.link || '');
+      items.push({ title: c.title, text: c.description || '', img: c.image || '', alt: c.imageAlt || c.title,
+        href: c.link || '', external: ext, date: c.date || '', label: c.linkLabel || 'Read Full Report' });
+    }
+  });
+  if (!items.length) {                       /* fallback: the first three reports, as before */
+    progData.slice(0, COUNT).forEach(function(d, i) {
+      var s = slugOf(i);
+      items.push({ title: d.title, text: progText(d), img: d.img, alt: d.title, href: s ? '/advocacy/reports/' + s + '/' : '/advocacy/#report-' + i, external: false, date: progDate(d), label: 'Read Full Report' });
+    });
+  }
+  items.forEach(function(it, i) {
     var feature = (i === 0);
-    var a = el('a', 'latest-card' + (feature ? ' latest-card--feature' : ''));
-    a.href = '/advocacy/#report-' + i;      /* opens that report's overlay on the Advocacy page */
-
+    var a = el(it.href ? 'a' : 'div', 'latest-card' + (feature ? ' latest-card--feature' : ''));
+    if (it.href) {
+      a.href = it.href;
+      if (it.external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    }
     var imgBox = el('div', 'latest-img');
-    var img = document.createElement('img');
-    img.src = d.img; img.alt = d.title; img.loading = 'lazy';
-    imgBox.appendChild(img);
+    if (it.img) {
+      var img = document.createElement('img');
+      img.src = it.img; img.alt = it.alt; img.loading = 'lazy';
+      imgBox.appendChild(img);
+    }
     if (feature) imgBox.appendChild(el('span', 'latest-badge', 'Newest'));
     a.appendChild(imgBox);
 
     var body = el('div', 'latest-body');
-    if (HIDE_TITLES.indexOf(d.title) === -1) body.appendChild(el('h3', 'latest-title', d.title));
-    body.appendChild(el('p', 'body-sm latest-excerpt', excerpt(d, feature ? 190 : 110)));
+    body.appendChild(el('h3', 'latest-title', it.title));
+    body.appendChild(el('p', 'body-sm latest-excerpt', cut(it.text, feature ? 190 : 110)));
     var foot = el('div', 'latest-foot');
-    var dt = dateOf(d);
-    if (dt) foot.appendChild(el('span', 'latest-date', dt));
-    var more = el('span', 'latest-more');
-    more.appendChild(el('span', '', 'Read Full Report'));
-    more.insertAdjacentHTML('beforeend', ARROW);
-    foot.appendChild(more);
+    if (it.date) foot.appendChild(el('span', 'latest-date', it.date));
+    if (it.href) {
+      var more = el('span', 'latest-more');
+      more.appendChild(el('span', '', it.label));
+      more.insertAdjacentHTML('beforeend', ARROW);
+      foot.appendChild(more);
+    }
     body.appendChild(foot);
     a.appendChild(body);
     grid.appendChild(a);
@@ -1332,4 +1363,34 @@ if (document.getElementById('progPage')) {
       }
     });
   }
+
+  /* Light / dark theme: sun-moon buttons in the top bar. The first visit follows the device setting;
+     after a click the choice is remembered in this browser. (The page already has the right theme
+     before it paints - see the small script in each page's <head>.) */
+  (function () {
+    var root = document.documentElement, btns = document.querySelectorAll('.theme-toggle');
+    if (!btns.length) return;
+    function isDark() { return root.getAttribute('data-theme') === 'dark'; }
+    function paint() {
+      btns.forEach(function (b) {
+        b.setAttribute('aria-pressed', isDark() ? 'true' : 'false');
+        b.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
+      });
+    }
+    function saved() { try { return localStorage.getItem('rsu-theme'); } catch (e) { return null; } }
+    function apply(dark) { if (dark) root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme'); paint(); }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var next = !isDark();
+        apply(next);
+        try { localStorage.setItem('rsu-theme', next ? 'dark' : 'light'); } catch (e) {}
+      });
+    });
+    if (window.matchMedia) {
+      var mq = matchMedia('(prefers-color-scheme: dark)');
+      var follow = function (e) { if (!saved()) apply(e.matches); };
+      if (mq.addEventListener) mq.addEventListener('change', follow); else if (mq.addListener) mq.addListener(follow);
+    }
+    paint();
+  })();
 })();
