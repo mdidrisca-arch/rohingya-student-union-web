@@ -33,11 +33,9 @@
 
 <link href='https://rostudentunion.org/blog/' rel='canonical'/>
 <!-- Performance hints: open connections to the font and image hosts early -->
-<link href='https://fonts.googleapis.com' rel='preconnect'/>
-<link crossorigin='' href='https://fonts.gstatic.com' rel='preconnect'/>
 <link href='https://blogger.googleusercontent.com' rel='preconnect'/>
 
-<link href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap' rel='stylesheet'/>
+<link as='font' crossorigin='' href='/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2' rel='preload' type='font/woff2'/>
 
 <!-- Structured Data (page + breadcrumb) -->
 <script type='application/ld+json'>
@@ -85,7 +83,7 @@
 }
 </script>
 
-<link href='/assets/site.css?v=45da790cf3' rel='stylesheet'/>
+<link href='/assets/site.css?v=0ebca02e33' rel='stylesheet'/>
 </head>
 
 <body>
@@ -140,10 +138,10 @@
 </div>
 
 <!-- FLOATING CTA -->
-<a class='floating-cta' id='floatingCta' href='/donate/'>
+<aside aria-label='Donate'><a class='floating-cta' id='floatingCta' href='/donate/'>
   <svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z'/></svg>
   <span>Donate Now</span>
-</a>
+</a></aside>
 
 <!-- SCROLL PROGRESS -->
 <div class='scroll-progress' id='scrollProgress'></div>
@@ -193,14 +191,22 @@
         <p class='section-tagline'>Stories, ideas, and voices from the Rohingya youth community.</p>
       </div>
 
-      <!-- Post cards. This area is filled by assets/blog.js from the list in assets/blog-posts.js
-           (edit that list, not this HTML). The block below is what visitors see while the list is empty. -->
+      <!-- Post cards. When the page loads, assets/blog.js replaces the saved cards below with the cards from the list in
+           assets/blog-posts.js (edit that list). The saved copy only stays on screen if JavaScript is off or that file cannot be
+           loaded. The RSU New Post Maker gives you a small piece to paste under the arrows to keep it up to date. -->
       <div class='blog-list' id='blogList'>
-        <div class='blog-empty' id='blogEmpty'>
-          <div class='blog-empty-icon' aria-hidden='true'><svg fill='none' height='28' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6' viewBox='0 0 24 24' width='28'><path d='M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10'/></svg></div>
-          <h2 class='blog-empty-title'>Our first stories are on the way</h2>
-          <p class='blog-empty-text'>We are preparing articles and reflections from Rohingya youth. In the meantime, read about our work in the field.</p>
-          <a class='btn btn-primary' href='/advocacy/'>Read our advocacy reports</a>
+        <div class='blog-grid'>
+          <!-- ↓↓↓ NEW SAVED CARDS GO HERE (newest first) ↓↓↓ -->
+<article class='blog-card'>
+<div class='blog-card-media'><img alt='A smiling Rohingya schoolgirl in a red headscarf sits at a desk in a learning centre classroom.' decoding='async' loading='lazy' src='/assets/img/blog/education-has-no-clear-future.jpg'/></div>
+<div class='blog-card-body'>
+<div class='blog-card-tag'>Education</div>
+<h2 class='blog-card-title'><a class='blog-card-link' href='/blog/when-education-has-no-clear-future/'>When Education Has No Clear Future: The Rohingya Education Crisis in the Camps</a></h2>
+<p class='blog-card-meta'><time datetime='2026-10-22'>October 22, 2026</time> &#183; By Rohingya Student Union</p>
+<p class='blog-card-excerpt'>For thousands of Rohingya students, the path from the classroom to higher education remains uncertain. The challenge is not simply getting children into school; it is giving them a realistic path forward.</p>
+<span aria-hidden='true' class='blog-read-more'>Read story &#8594;</span>
+</div>
+</article>
         </div>
       </div>
     </div>
@@ -232,7 +238,7 @@
         <ul class='footer-links'>
           <li><a href='/team/'>Our Leadership</a></li>
           <li><a href='/gallery/'>Gallery</a></li>
-          <li><a href='/contact/'>Secure Intake</a></li>
+          <li><a href='/privacy/'>Privacy &amp; Terms</a></li>
         </ul>
       </div>
       <div>
