@@ -185,3 +185,14 @@
   .rp-list li, .rp-prose { break-inside: avoid; }
   .rp-end { border: 0; padding: 0; margin-top: 24px; }
 }
+
+
+/* ---------- dark mode (applied when <html data-theme="dark">; light mode above is untouched) ---------- */
+@media screen {
+html[data-theme='dark'] .rp-article { --rp-rule: rgba(255,255,255,0.2); --rp-label: #A3B5A9; }
+html[data-theme='dark'] :is(.rp-crumbs a, .rp-crumbs a:hover, .rp-eyebrow, .rp-btn, .rp-btn:hover, .rp-share-status,
+  .rp-related-link::after, .rp-related-link:hover .rp-related-title, .rp-back, .rp-back:hover) { color: #B7EBBF; }
+html[data-theme='dark'] .rp-btn:hover { background: #17291E; }
+html[data-theme='dark'] .rp-lead img { background: #15241B; }
+html[data-theme='dark'] .skip-link { background: #B7EBBF; color: #0B1510; }
+}

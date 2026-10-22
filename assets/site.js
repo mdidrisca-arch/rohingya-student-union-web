@@ -1363,4 +1363,34 @@ if (document.getElementById('progPage')) {
       }
     });
   }
+
+  /* Light / dark theme: sun-moon buttons in the top bar. The first visit follows the device setting;
+     after a click the choice is remembered in this browser. (The page already has the right theme
+     before it paints - see the small script in each page's <head>.) */
+  (function () {
+    var root = document.documentElement, btns = document.querySelectorAll('.theme-toggle');
+    if (!btns.length) return;
+    function isDark() { return root.getAttribute('data-theme') === 'dark'; }
+    function paint() {
+      btns.forEach(function (b) {
+        b.setAttribute('aria-pressed', isDark() ? 'true' : 'false');
+        b.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
+      });
+    }
+    function saved() { try { return localStorage.getItem('rsu-theme'); } catch (e) { return null; } }
+    function apply(dark) { if (dark) root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme'); paint(); }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var next = !isDark();
+        apply(next);
+        try { localStorage.setItem('rsu-theme', next ? 'dark' : 'light'); } catch (e) {}
+      });
+    });
+    if (window.matchMedia) {
+      var mq = matchMedia('(prefers-color-scheme: dark)');
+      var follow = function (e) { if (!saved()) apply(e.matches); };
+      if (mq.addEventListener) mq.addEventListener('change', follow); else if (mq.addListener) mq.addListener(follow);
+    }
+    paint();
+  })();
 })();

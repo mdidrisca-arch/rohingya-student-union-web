@@ -1156,7 +1156,7 @@ nav.nav-scrolled .nav-logo-emblem { width: 34px; height: 34px; }
 /* Core Values */
 .values-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);   /* four cards: two rows of two */
   gap: 28px;
   margin-top: 56px;
 }
@@ -2494,3 +2494,95 @@ a.nav-logo { color: inherit; }   /* the logo is now a link: keep the text colour
 @media (max-width: 768px) { .section-tagline { font-size: 15px; margin-top: 10px; } }
 
 .latest-excerpt { color: #56695c; }
+
+
+/* ═════════ Theme toggle (sun / moon button) ═════════ */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+  background: transparent; color: var(--text-body); border: 1px solid var(--border-md);
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.theme-toggle:hover { background: var(--green-50); color: var(--green-700); border-color: var(--green-400); }
+.theme-toggle .ti-sun { display: none; }
+html[data-theme='dark'] .theme-toggle .ti-sun { display: block; }
+html[data-theme='dark'] .theme-toggle .ti-moon { display: none; }
+.theme-toggle--mobile { display: none; margin-left: auto; margin-right: 6px; }
+@media (max-width: 1100px) { .theme-toggle--mobile { display: inline-flex; } }
+
+/* ═════════ DARK MODE ═════════
+   Applied when <html data-theme="dark"> (set from the visitor's saved choice, or their device setting).
+   Light mode above is untouched. Colour variables for surfaces and text are swapped here; the dark green
+   banners, cards and footer already suit a dark page and are left as they are. */
+@media screen {
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --warm-white: #0E1812;
+  --ink: #F1EEE6;
+  --ink-soft: #D6DDD8;
+  --text-body: #C4CFC7;
+  --text-muted: #A3B5A9;
+  --text-hint: #8A9D90;
+  --green-50: #15241B;
+  --green-100: #22372A;
+  --green-200: #30503B;
+  --border: rgba(255,255,255,0.10);
+  --border-md: rgba(255,255,255,0.18);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.35);
+}
+/* page + bars */
+html[data-theme='dark'] body { background: var(--warm-white); }
+html[data-theme='dark'] nav { background: #0B1510; border-bottom-color: rgba(255,255,255,0.08); }
+html[data-theme='dark'] nav.nav-scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
+html[data-theme='dark'] .nav-logo-emblem { filter: brightness(1.8) saturate(1.1); }
+html[data-theme='dark'] .nav-logo-text span,
+html[data-theme='dark'] .nav-links li button, html[data-theme='dark'] .nav-links li a { color: #B4C4B9; }
+html[data-theme='dark'] .section-tagline, html[data-theme='dark'] .latest-excerpt { color: #AFC0B4; }
+html[data-theme='dark'] .mobile-drawer-panel { background: #0B1510; }
+html[data-theme='dark'] .mobile-close { background: #15241B; color: var(--ink-soft); }
+html[data-theme='dark'] .mobile-drawer { background: rgba(0,0,0,0.6); }
+html[data-theme='dark'] .nav-sub-panel { background: #0F1B14; }
+html[data-theme='dark'] footer { background: #08130C; }
+html[data-theme='dark'] .footer-tagline { color: rgba(248,245,238,0.72); }
+html[data-theme='dark'] .footer-links li a, html[data-theme='dark'] .footer-links li button { color: rgba(248,245,238,0.72); }
+html[data-theme='dark'] .footer-links li a:hover, html[data-theme='dark'] .footer-links li button:hover { color: var(--ivory); }
+html[data-theme='dark'] .footer-bottom { color: rgba(248,245,238,0.6); }
+html[data-theme='dark'] .footer-credit a { color: rgba(248,245,238,0.72); }
+/* light sections that used the ivory tone */
+html[data-theme='dark'] .impact-section, html[data-theme='dark'] .manifesto-strip, html[data-theme='dark'] .pub-hero,
+html[data-theme='dark'] .card--ivory { background: #101D15; }
+html[data-theme='dark'] .pp-topbar { background: rgba(11,21,16,0.96); }
+html[data-theme='dark'] .gallery-hero { background: #08130C; }
+html[data-theme='dark'] .rp-lead img, html[data-theme='dark'] .lead-img-frame { background: #15241B; }
+html[data-theme='dark'] .btn-gold { color: #111A15; }
+/* white cards */
+html[data-theme='dark'] .latest-card, html[data-theme='dark'] .info-card:not(.info-card--dark),
+html[data-theme='dark'] .contact-form-card, html[data-theme='dark'] .donate-steps, html[data-theme='dark'] .donate-use-card { background: #13211A; }
+html[data-theme='dark'] .form-input:focus { background: #0E1812; }
+html[data-theme='dark'] .form-input { color: var(--ink); }
+/* dark-green text (headings, links, labels) -> light green so it reads on a dark page */
+html[data-theme='dark'] :is(
+  .nav-logo-text, .nav-links li button:hover, .nav-links li a:hover, .nav-links li button.active, .nav-links li a.active,
+  .btn-outline, .mobile-drawer-links li button.active, .mobile-drawer-links li a.active,
+  .latest-title, .latest-more, .section-header--center .display-lg,
+  .info-card:not(.info-card--dark) h3, .info-card--intro p:first-of-type, .contact-form-card h3, .form-label,
+  .donate-steps h3, .donate-step-title, .donate-use-card h3, .donate-more-title,
+  .prog-card-tag, .prog-read-more, .pp-back, .pp-topbar-tag, .pp-meta-label, .pp-meta-val, .pp-section-head,
+  .programs-full-grid .prog-card-tag, #programsGrid .prog-card--report:hover .prog-title-link,
+  .prog-share, .prog-share:hover, .prog-share[aria-expanded='true'], .prog-share-item, .prog-share-status,
+  .lead-role, .badge-green, .mission-list li::before, .post-body h2, .post-body h3, .post-body a, .post-body blockquote,
+  .testimonial-name
+) { color: #B7EBBF; }
+html[data-theme='dark'] .btn-outline { border-color: #3FB84F; }
+html[data-theme='dark'] .btn-outline:hover { color: #D2F5D7; }
+html[data-theme='dark'] .nav-pill, html[data-theme='dark'] .nav-links li a:hover { background: #17291E; }
+html[data-theme='dark'] .badge-green { background: #1C3A26; }
+html[data-theme='dark'] .about-hero .eyebrow, html[data-theme='dark'] .media-hero .eyebrow, html[data-theme='dark'] .gallery-hero .eyebrow { color: #A0E0AA; }
+html[data-theme='dark'] .testimonial-card { background: #13211A; }
+html[data-theme='dark'] .testimonials-section { background: #0F1C14; }
+html[data-theme='dark'] .prog-title, html[data-theme='dark'] .pub-title-text, html[data-theme='dark'] .lead-name { color: var(--ink); }
+html[data-theme='dark'] .program-icon svg { stroke: #6BCB79; }
+html[data-theme='dark'] .floating-cta::after { border-color: var(--gold); }
+}
