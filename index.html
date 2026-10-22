@@ -33,8 +33,6 @@
 
 <link href='https://rostudentunion.org/' rel='canonical'/>
 <!-- Performance hints: open connections to the font and image hosts early -->
-<link href='https://fonts.googleapis.com' rel='preconnect'/>
-<link crossorigin='' href='https://fonts.gstatic.com' rel='preconnect'/>
 <link href='https://blogger.googleusercontent.com' rel='preconnect'/>
 <link as='image' fetchpriority='high' href='https://blogger.googleusercontent.com/img/a/AVvXsEgRBqIKk0RTlPzCNoMjxHVSQbV0m4Nj3XLlebsyYObKtaR5ywWxKRiJiNuuhT_-5mXJ_tX0lWk7sMe4kzsURIptqh0UzxKNJVMYuX5oIXGZv8_7wo0ujV5Vwoc6dfNCCVoWrRgvEL7ZRI4gI0OrKl8mzi8dN0pbcvVBzJuV893pe3T2MBnBw1EZMcFWVd4' rel='preload'/>
 <!-- Old hash addresses such as /#/about or /#/advocacy/3 are forwarded to the real pages -->
@@ -53,7 +51,7 @@
 })();
 </script>
 
-<link href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap' rel='stylesheet'/>
+<link as='font' crossorigin='' href='/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2' rel='preload' type='font/woff2'/>
 
 <!-- Structured Data (NGO / Organization) -->
 <script type='application/ld+json'>
@@ -99,7 +97,7 @@
 }
 </script>
 
-<link href='/assets/site.css?v=45da790cf3' rel='stylesheet'/>
+<link href='/assets/site.css?v=68b984f98c' rel='stylesheet'/>
 </head>
 
 <body>
@@ -154,10 +152,10 @@
 </div>
 
 <!-- FLOATING CTA -->
-<a class='floating-cta' id='floatingCta' href='/donate/'>
+<aside aria-label='Donate'><a class='floating-cta' id='floatingCta' href='/donate/'>
   <svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z'/></svg>
   <span>Donate Now</span>
-</a>
+</a></aside>
 
 <!-- SCROLL PROGRESS -->
 <div class='scroll-progress' id='scrollProgress'></div>
@@ -316,6 +314,50 @@
     </div>
   </section>
 
+  <section class='section home-blog-section' id='homeBlog' hidden>
+    <div class='container'>
+      <div class='section-header--center section-header'>
+        <h2 class='display-lg'>From the Blog</h2>
+        <p class='section-tagline'>Stories, ideas, and voices from the Rohingya youth community.</p>
+      </div>
+      <!-- Filled automatically with the newest posts from assets/blog-posts.js; the section stays hidden if there are none -->
+      <div class='blog-grid' id='homeBlogGrid'></div>
+      <div class='latest-cta'>
+        <a class='btn btn-outline' href='/blog/'>Read All Articles</a>
+      </div>
+    </div>
+  </section>
+
+  <section class='section involve-section' id='getInvolved'>
+    <div class='container'>
+      <div class='section-header--center section-header'>
+        <h2 class='display-lg'>Get Involved</h2>
+        <p class='section-tagline'>There is a place for you in this movement.</p>
+      </div>
+      <div class='involve-grid'>
+        <div class='involve-card'>
+          <div class='involve-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6' viewBox='0 0 24 24' aria-hidden='true'><path d='M12 21s-7-4.35-7-10a4 4 0 017-2.65A4 4 0 0119 11c0 5.65-7 10-7 10z'/></svg></div>
+          <h3 class='involve-title'>Volunteer with us</h3>
+          <p class='body-sm'>Offer your time and skills to support RSU's education, advocacy and community work.</p>
+          <a class='btn btn-outline involve-btn' href='mailto:rsu.incamp@gmail.com?subject=I%20would%20like%20to%20volunteer%20with%20RSU&amp;body=Hello%20RSU%20team%2C%0A%0AName%3A%20%0AWhere%20I%20am%20based%3A%20%0ASkills%20or%20interests%3A%20%0ATime%20I%20can%20offer%3A%20%0A%0AThank%20you.'>Offer to volunteer</a>
+        </div>
+        <div class='involve-card'>
+          <div class='involve-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6' viewBox='0 0 24 24' aria-hidden='true'><path d='M7.5 12.5l3 3 6-6M3 12a9 9 0 1018 0 9 9 0 00-18 0z'/></svg></div>
+          <h3 class='involve-title'>Partner with RSU</h3>
+          <p class='body-sm'>Schools, organizations and allies: let us work together on education, youth leadership and advocacy.</p>
+          <a class='btn btn-outline involve-btn' href='mailto:rsu.incamp@gmail.com?subject=Partnership%20enquiry%20for%20RSU&amp;body=Hello%20RSU%20team%2C%0A%0AOrganization%3A%20%0AWebsite%3A%20%0AHow%20we%20would%20like%20to%20work%20together%3A%20%0A%0AThank%20you.'>Start a partnership</a>
+        </div>
+        <div class='involve-card'>
+          <div class='involve-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6' viewBox='0 0 24 24' aria-hidden='true'><path d='M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10'/></svg></div>
+          <h3 class='involve-title'>Write for the Blog</h3>
+          <p class='body-sm'>Share your story, ideas or research with the Rohingya youth community.</p>
+          <a class='btn btn-outline involve-btn' href='mailto:rsu.incamp@gmail.com?subject=Article%20idea%20for%20the%20RSU%20Blog&amp;body=Hello%20RSU%20team%2C%0A%0AName%3A%20%0AArticle%20idea%20%28a%20few%20sentences%29%3A%20%0AWhere%20I%20would%20like%20to%20be%20credited%20from%3A%20%0A%0AThank%20you.'>Pitch an article</a>
+        </div>
+      </div>
+      <p class='involve-note'>These buttons open your email app with a ready-made message to <a href='mailto:rsu.incamp@gmail.com'>rsu.incamp@gmail.com</a>. Nothing is sent until you press send.</p>
+    </div>
+  </section>
+
   <section class='section section--sm donate-cta-section'>
     <div class='container'>
       <div class='section-header--center section-header' style='margin-bottom:40px;'>
@@ -407,6 +449,7 @@
           <li><a href='/team/'>Our Leadership</a></li>
           <li><a href='/gallery/'>Gallery</a></li>
           <li><a href='/contact/'>Secure Intake</a></li>
+          <li><a href='/privacy/'>Privacy &amp; Terms</a></li>
         </ul>
       </div>
       <div>
@@ -427,6 +470,8 @@
 
 <script defer='defer' src='/assets/report-extras.js?v=a4492288b0'></script>
 <script defer='defer' src='/assets/advocacy-updates.js?v=a4492288b0'></script>
+<script defer='defer' src='/assets/blog-posts.js'></script>
+<script defer='defer' src='/assets/blog.js'></script>
 <script defer='defer' src='/assets/site.js?v=06656a9b65'></script>
 </body>
 </html>
