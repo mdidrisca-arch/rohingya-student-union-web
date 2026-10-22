@@ -202,8 +202,8 @@ html[data-theme='dark'] .skip-link { background: #B7EBBF; color: #0B1510; }
 .bp-article .rp-title { max-width: 26ch; font-size: clamp(2rem, 1.25rem + 2.9vw, 3.125rem); line-height: 1.12; }
 .bp-byline { margin: 22px 0 0; font-size: 15px; line-height: 1.5; color: var(--rp-label); }
 .bp-byline span[aria-hidden] { margin: 0 6px; }
-.bp-body { width: min(100% - 2 * var(--rp-gutter), 720px); margin: 56px auto 0; }
-.bp-p { margin: 0 0 1.35em; font-size: 1.1875rem; line-height: 1.8; color: var(--text-body, #3D4F43); text-wrap: pretty; }
+.bp-body { width: min(100% - 2 * var(--rp-gutter), var(--rp-read, 1040px)); margin: 56px auto 0; }
+.bp-p { margin: 0 0 1.35em; font-size: 1.25rem; line-height: 1.8; color: var(--text-body, #3D4F43); text-wrap: pretty; }
 .bp-p strong { color: var(--ink, #111A15); font-weight: 700; }
 .bp-quote { margin: 0 0 1.1em; font-size: 1.375rem; line-height: 1.55; font-style: italic; color: var(--ink-soft, #2C3A31); }
 .bp-callout {
