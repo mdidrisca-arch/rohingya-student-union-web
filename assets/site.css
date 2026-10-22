@@ -2817,3 +2817,7 @@ html[data-theme='dark'] .nav-actions .btn { box-shadow: 0 6px 16px rgba(0,0,0,0.
 .mobile-drawer-footer .btn { padding: 11px 18px; font-size: 14px; border-radius: 8px; }
 html[data-theme='dark'] .mobile-drawer-links li button:hover, html[data-theme='dark'] .mobile-drawer-links li a:hover, html[data-theme='dark'] .mobile-drawer-links li a.active, html[data-theme='dark'] .mobile-drawer-links li button.active { background: #17291E; }
 html[data-theme='dark'] .mobile-drawer-links li a.active .mdl-icon, html[data-theme='dark'] .mobile-drawer-links li a:hover .mdl-icon { color: #B7EBBF; }
+
+/* ===== Breathing room between the last content and the footer (Contact, Advocacy) ===== */
+#page-contact > section:last-of-type, #page-advocacy > section:last-of-type { padding-bottom: 96px !important; }
+@media (max-width: 768px) { #page-contact > section:last-of-type, #page-advocacy > section:last-of-type { padding-bottom: 64px !important; } }
